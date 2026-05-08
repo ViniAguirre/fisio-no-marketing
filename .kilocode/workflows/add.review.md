@@ -1,0 +1,712 @@
+---
+description: Feature code review specialist with auto-correction until 100% correct
+---
+
+# Feature Code Review Specialist
+
+> **AUTO-CORRECTION RULE:** The reviewer MUST automatically apply ALL identified corrections. Only finalize when code is 100% correct.
+> **LANG:** Respond in user's native language (detect from input). Tech terms always in English.
+> **OWNER:** Adapt detail level to owner profile from status.sh (beginner → explain why; advanced → essentials only).
+
+Coordinator for feature code review. Dispatches specialized reviewers (Frontend + Backend) in parallel, consolidates findings, auto-corrects all violations, verifies build, and outputs structured report to console.
+
+---
+
+## Spec
+
+```json
+{"outputs":{"report":"console + docs/features/${FEATURE_ID}/review.md"},"schema":null,"schema_note":"PRD0009 scope judgment — no add-doc-schemas entry applies"}
+```
+
+---
+
+## PRD0009 Schema Applicability (judgment)
+
+`/add.review` writes `docs/features/${FEATURE_ID}/review.md` as a **pre-merge quality-gate checklist** tied to a specific feature, not a persistent standalone report consumed later by agents. The `add-doc-schemas` registry covers `audit-report` (date-scoped, project-wide findings) and `diagnose-report` (triage) — neither matches a feature-scoped, merge-transient review. No `review-report` schema exists, and PRD0009 explicitly forbids inventing schemas in this wave.
+
+Decision: `/add.review` is **out of scope for schema application**. It does not load a schema, does not carry an `AUDIT-*`/`DIAG-*` ID, and does not run the validation gate. The `review.md` output remains structured by the existing Quality Gate Report + in-command sections, consumed immediately by `/add.done`. If future work introduces a canonical `feature-review` schema, revisit this command.
+
+---
+
+## Yolo Mode
+
+If argument contains `--yolo`:
+- Skip Pre-Review Setup (STEP 1) — auto-stage all changes
+- Do NOT ask for confirmation at any gate
+- Auto-correct ALL violations without confirmation
+- Execute to completion without human interaction
+- Log all auto-decisions in console output
+
+---
+
+## ⛔⛔⛔ MANDATORY SEQUENTIAL EXECUTION ⛔⛔⛔
+
+**STEPS IN ORDER:**
+```
+STEP 1: Pre-Review Setup        → CHECK unstaged, ASK user
+STEP 2: Bootstrap Context       → status.sh, load docs, load CLAUDE.md, read changed files
+STEP 3: Spec Compliance Audit   → Deep plan.md vs code (BEFORE technical review)
+STEP 4: Dispatch Reviewers      → PARALLEL (Frontend + Backend via Task)
+STEP 5: Consolidate Findings    → Merge, deduplicate, aggregate, score
+STEP 6: Build Verification      → npm run build, fix until passing
+STEP 7: Validation Gates Re-Run → INDEPENDENTLY re-run every gate from CLAUDE.md (do NOT trust ticks)
+
+STEP 8: Quality Gate Report     → Create review.md + console output
+```
+
+**ABSOLUTE PROHIBITIONS:**
+
+```
+IF IMPLEMENTATION NOT COMPLETE:
+  ⛔ DO NOT USE: Task for reviewer subagents
+  ✅ DO: Inform user to complete development first
+
+IF CONTEXT NOT LOADED (STEP 2):
+  ⛔ DO NOT USE: Write for spec audit output
+  ⛔ DO NOT USE: Task for reviewer subagents
+  ✅ DO: Load all feature docs and CLAUDE.md first
+
+IF SPEC AUDIT NOT COMPLETE (STEP 3):
+  ⛔ DO NOT USE: Task for reviewer subagents
+  ✅ DO: Execute Spec Compliance Audit first
+
+IF BUILD FAILING (after fixes):
+  ⛔ DO NOT: Proceed to STEP 7 or STEP 8
+  ✅ DO: Fix build errors until 100% passing
+
+IF STARTUP TEST FAILS (exit code 1, non-connection error):
+  ⛔ DO NOT USE: Write to create review.md
+  ✅ DO: Fix DI/IoC error, re-run startup test
+
+IF tasks.md HAS `## Validation Gates` SECTION:
+  ⛔ DO NOT: Trust existing `[x]` ticks on `## Validation Gates` — review's job is to verify, not to trust
+  ⛔ DO NOT USE: Write to create review.md until every gate command from CLAUDE.md `validation_gates` has been INDEPENDENTLY re-invoked via Bash in this session and its exit code captured
+  ⛔ DO NOT: Mark review READY while any gate is red on a file in `git diff --name-only`
+  ✅ DO: Re-run every gate from scratch in STEP 7; record the (gate, exit code) pairs in review.md; downgrade `[x]` to `[!]` on regression
+
+IF CLAUDE.md HAS NO `validation_gates` BLOCK:
+  ⛔ DO NOT: Skip review silently
+  ✅ DO: Emit ONE single line: "Note: validation_gates not detected in CLAUDE.md. Run /add.xray to enable validation gates." Continue with the rest of the review.
+
+ALWAYS:
+  ⛔ DO NOT USE: Bash for git commit
+  ⛔ DO NOT: Stage without user permission
+```
+
+---
+
+## STEP 1: Pre-Review Setup
+
+### 1.1 Check for Unstaged Changes
+
+Check working directory for unstaged/untracked changes.
+
+**If there are unstaged changes:**
+
+Use AskUserQuestion tool to ask the user:
+
+```
+Detected uncommitted changes in your working directory.
+
+To include the changes in the next commit along with review corrections, I can stage them (git add).
+
+Can I stage your changes?
+- Yes: I stage and proceed with the review
+- No: I keep as-is and proceed (changes remain unstaged)
+```
+
+**If user agrees (Yes):**
+```bash
+git add -A
+```
+Save `STAGED_CHANGES=true` for tracking.
+
+**If user declines (No):**
+Proceed with review. Save `STAGED_CHANGES=false`.
+
+**If no unstaged changes:**
+Proceed directly. Save `STAGED_CHANGES=false`.
+
+### 1.2 Validate Implementation Complete
+
+**GATE: Implementation must exist.**
+- Feature code exists (committed, staged, or unstaged)
+- `docs/features/${FEATURE_ID}/about.md` exists
+- `docs/features/${FEATURE_ID}/plan.md` exists (recommended)
+
+**IF implementation is NOT complete:**
+- DO NOT USE: Task for reviewer subagents
+- DO: Inform user and STOP
+
+---
+
+## STEP 2: Bootstrap Context
+
+### 2.1 Detect Current Feature
+
+```bash
+bash .codeadd/scripts/status.sh
+```
+
+**Parse the output to get:**
+- `FEATURE_ID`
+- `CURRENT_PHASE`
+- `FILES_TO_REVIEW` (consolidated list of all changed files)
+
+**Feature identified:** Display and proceed automatically.
+**No feature:** If ONE exists, use it; if MULTIPLE, ask user.
+
+### 2.2 Load Feature Documentation
+
+List the feature docs directory, then **load ALL documents IN ORDER:**
+1. `about.md` - Feature specification (EXTRACT: RF, RN, Acceptance Criteria)
+2. `discovery.md` - Discovery insights (CHECK: Prerequisites Analysis)
+3. `plan.md` - Technical plan (PRIMARY - verification checklist)
+4. `design.md` - UX design (if exists)
+5. `iterations.jsonl` - Implementation history (JSONL: what was implemented, pivots, areas touched)
+   - Each line: `{"ts":"...","agent":"...","type":"...","slug":"...","what":"...","files":["..."]}`
+   - Use to understand: implementation sequence, which areas were modified, any pivots/corrections
+   - Cross-reference with changed files to validate completeness
+6. `decisions.jsonl` - Pivot decisions (if exists, check for areas with multiple pivots = extra review attention)
+7. Load project patterns for validation:
+   - IF `PROJECT_SKILL` in script output: run `bash .codeadd/scripts/pattern-search.sh --list` to see areas, then `pattern-search.sh [area]` for each relevant area to get topic ranges. Read only topics related to the changed code.
+   - IF `PROJECT_DOCS` in script output: read ALL listed project pattern files
+   - These contain implementation patterns to validate against
+
+### 2.3 Load Project Architecture Reference
+
+Read CLAUDE.md and **extract from specification:**
+- Configuration patterns (env vars, configs)
+- DI patterns (service injection)
+- Repository patterns
+- CQRS patterns (if applicable)
+- Naming conventions
+- Multi-tenancy rules (if applicable)
+- Security rules
+- Expected file structure
+
+**CLAUDE.md is the source of truth** for validating code.
+
+### 2.4 Read ALL Changed Files
+
+From `status.sh` output, read ALL files in `FILES_TO_REVIEW`.
+
+**IMPORTANT:** Review must cover ALL changed files (committed, staged, unstaged, untracked).
+
+**GATE: Context must be fully loaded before dispatching reviewers.**
+
+---
+
+## STEP 3: Spec Compliance Audit (BEFORE technical review)
+
+**Deep audit of plan.md spec vs implemented code. Catches gaps the code review does not.**
+
+### 3.1 Load Contracts (plan.md prose) and Tick State (tasks.md → ## Acceptance Checklist)
+
+```
+READ docs/features/${FEATURE_ID}/plan.md
+  → Extract contracts from prose:
+    - Routes: POST/GET/PUT/DELETE + path patterns
+    - Services: Service/Handler/Adapter class definitions
+    - DTOs: Dto/Request/Response class definitions
+    - Guards: Guard class definitions
+    - Queues: queue/processor/worker references
+
+READ docs/features/${FEATURE_ID}/tasks.md → section `## Acceptance Checklist`
+  → Each item ends with `(RFNN/RNNN)` reference and carries [ ]/[x]/[!] tick state
+  → Use as deterministic audit source — pairs each contract with its RF/RN coverage and tick state
+READ docs/features/${FEATURE_ID}/tasks.md → section `## Requirements Coverage`
+  → Derived RF/RN tick state — used in §3.3 cross-reference
+
+IF tasks.md OR `## Acceptance Checklist` ABSENT:
+  ⛔ DO NOT proceed with audit
+  ✅ DO: Stop and report "Feature missing tasks.md/##Acceptance Checklist — must replan via /add.plan"
+```
+
+### 3.2 Execute Audit (ALL areas)
+
+For EACH item in `## Acceptance Checklist`:
+
+```
+a. LOCATE implementation with file:line (cross-reference contract from plan.md prose)
+b. VALIDATE not just existence but BEHAVIOR:
+   - Route: exists AND accepts correct params (path variables, query, body)?
+   - Service: generic/adapter-based as spec OR hardcoded to specific provider?
+   - DTO: has ALL specified fields with correct types?
+   - Guard: applied at correct scope?
+   - Queue: processes events as described?
+c. COMPARE with about.md: does the item satisfy the RF/RN referenced in `(RFNN/RNNN)`?
+d. STATUS per item (cross-check tick state vs reality):
+   COMPLIANT     — tick `[x]` AND matches plan.md prose in name, type, behavior
+   DIVERGENT     — tick `[x]` but differs from spec (describe exact gap; possibly stale tick)
+   FAILED        — tick `[!]` (validator already flagged); inspect REASON, confirm or escalate
+   PENDING       — tick `[ ]` (not yet implemented)
+   STALE TICK    — tick `[x]` but code missing — re-open tick, block delivery
+```
+
+### 3.3 Cross-Reference
+
+```
+Do ALL RF/RN from about.md appear in tasks.md → ## Requirements Coverage?
+Do ALL RF/RN have at least one ## Acceptance Checklist item referencing them via `(RFNN/RNNN)`?
+  → COVERED:   RF/RN has corresponding checklist item(s)
+  → UNCOVERED: RF/RN has no checklist item — architect failed at /add.plan; requires replan
+```
+
+### 3.4 Spec Audit Output
+
+Output the audit as a table with columns: Item, Type, Expected, Found at, Status. Include summary counts (COMPLIANT/DIVERGENT/MISSING), RF/RN coverage, and compute SPEC_AUDIT_STATUS (COMPLIANT | DIVERGENT | INCOMPLETE).
+
+**GATE: SPEC_AUDIT_STATUS MUST be computed before dispatching reviewers.**
+- DO NOT USE: Task for reviewer subagents if spec audit not complete
+- DO: Include SPEC_AUDIT_STATUS in reviewer prompts as context
+
+---
+
+## STEP 4: Dispatch Specialized Reviewers (PARALLEL)
+
+### 4.1 Detect Scope
+
+Based on changed files, determine which reviewers to dispatch:
+- **frontend**: `apps/frontend/**` detected
+- **backend**: `apps/backend/**` OR `libs/**` detected
+
+### 4.2 Dispatch Strategy
+
+**If BOTH frontend and backend files exist:**
+- Dispatch BOTH reviewers in PARALLEL (single message, multiple Task calls)
+
+**If only ONE area exists:**
+- Dispatch single reviewer
+
+**Always wait for ALL reviewers to complete before proceeding.**
+
+---
+
+### DISPATCH AGENT: @reviewer-agent — Frontend Review
+
+**Intent:** Review frontend code quality, patterns, and UX implementation for the feature.
+
+```
+description: "Review Frontend for ${FEATURE_ID}"
+prompt: |
+  ## ROLE
+  You are the FRONTEND REVIEWER for feature ${FEATURE_ID}.
+  Validate frontend code quality, patterns, and UX implementation.
+
+  ## BOOTSTRAP
+  1. Run: bash .codeadd/scripts/status.sh
+  2. Read ALL files listed in TASK_DOCUMENTS
+  3. IF PROJECT_SKILL in script output: run `bash .codeadd/scripts/pattern-search.sh frontend` and read relevant topic ranges
+     IF PROJECT_DOCS in script output: read matching frontend pattern files
+  4. Read changed files: [list from FILES_TO_REVIEW with apps/frontend/** pattern]
+  5. Read skills:
+     - skill add-frontend-development (PRIMARY)
+     - skill add-code-review
+     - skill add-ux-design (if design.md missing)
+     - Component refs: shadcn-docs.md, tailwind-v3-docs.md, motion-dev-docs.md, recharts-docs.md, tanstack-table-docs.md, tanstack-query-docs.md (in skill add-ux-design)
+
+  ## TASK_DOCUMENTS (read ALL — source of truth)
+  ${TASK_DOCUMENTS}
+
+  ## VALIDATION CATEGORIES
+
+  ### 1. Frontend Patterns (from frontend-development skill)
+  - [ ] React patterns: Hooks correctness, component composition
+  - [ ] State management: Context, store, local state usage
+  - [ ] API integration: TanStack Query, error handling
+  - [ ] Types: Frontend types mirror backend DTOs
+  - [ ] Forms: Validation, error messages
+
+  ### 2. UX Implementation (from design.md or ux-design skill)
+  - [ ] Design specs followed (if design.md exists)
+  - [ ] Responsive design (mobile, tablet, desktop)
+  - [ ] Accessibility (ARIA, keyboard navigation)
+  - [ ] Loading states, error states
+  - [ ] User feedback (toasts, confirmations)
+
+  ### 3. Code Quality
+  - [ ] No `any` types (use explicit types or `unknown`)
+  - [ ] No `console.log` (use proper logging if needed)
+  - [ ] No dead code or unused imports
+  - [ ] No hardcoded values (extract to constants)
+
+  ### 4. Security (Frontend-Specific)
+  - [ ] XSS protection: Outputs sanitized
+  - [ ] URLs validated before use in href/src
+  - [ ] No sensitive data in localStorage (use httpOnly cookies)
+
+  ### 5. Contract Validation
+  - [ ] Frontend types match backend DTOs
+  - [ ] API calls use correct endpoints
+  - [ ] Request/response types align
+
+  ### 6. Project Patterns Validation (if project-patterns skill exists)
+  - [ ] State management follows documented pattern (pattern-search.sh frontend "State Management")
+  - [ ] Component structure follows documented pattern (pattern-search.sh frontend "Component Structure")
+  - [ ] Styling follows documented pattern (pattern-search.sh frontend "Styling")
+  - [ ] HTTP client follows documented pattern (pattern-search.sh frontend "HTTP Client")
+
+  ## RULES
+  - NO questions — fix issues automatically
+  - Use skill patterns as source of truth
+  - If design.md exists, specs are MANDATORY (not optional)
+  - Fix ALL violations (no deferrals)
+  - DO NOT run build (coordinator will do it)
+
+  ## REPORT FORMAT
+  Return: Files Reviewed count, Issues Found by Category (Frontend Patterns, UX, Code Quality, Security, Contracts), Issues Fixed (file:line, severity, description, fix), Files Modified, Severity Summary, Score X/10 (deduct 2 per critical, 1 per high, 0.5 per medium).
+```
+
+---
+
+### DISPATCH AGENT: @reviewer-agent — Backend Review
+
+**Intent:** Review backend code quality, architecture, security, database, and product completeness for the feature.
+
+```
+description: "Review Backend for ${FEATURE_ID}"
+prompt: |
+  ## ROLE
+  You are the BACKEND REVIEWER for feature ${FEATURE_ID}.
+  Validate backend code quality, architecture, security, database, AND product completeness.
+
+  ## BOOTSTRAP
+  1. Run: bash .codeadd/scripts/status.sh
+  2. Read ALL files listed in TASK_DOCUMENTS
+  3. IF PROJECT_SKILL in script output: run `bash .codeadd/scripts/pattern-search.sh backend,database` and read relevant topic ranges
+     IF PROJECT_DOCS in script output: read matching backend/database pattern files
+  4. Read changed files: [list from FILES_TO_REVIEW with apps/backend/** OR libs/** pattern]
+  5. Read skills:
+     - skill add-backend-development (PRIMARY)
+     - skill add-database-development
+     - skill add-code-review
+     - skill add-security-audit
+     - skill add-delivery-validation
+
+  ## TASK_DOCUMENTS (read ALL — source of truth)
+  ${TASK_DOCUMENTS}
+
+  ## VALIDATION CATEGORIES
+
+  ### 1. Project-Specific Patterns (CRITICAL)
+  **IoC/DI Configuration:**
+  - [ ] Services in module providers
+  - [ ] Modules imported in AppModule
+  - [ ] Barrel exports complete (entities, repositories, interfaces)
+
+  **RESTful API Compliance:**
+  - [ ] Noun-based URLs (no verbs like /getUsers)
+  - [ ] POST returns 201 (with @HttpCode decorator)
+  - [ ] DELETE returns 204 (with @HttpCode decorator)
+  - [ ] Proper HTTP methods for operations
+
+  **DTOs & Validation:**
+  - [ ] DTOs with class-validator decorators
+  - [ ] Handler methods use DTOs (not raw objects)
+  - [ ] Validation enabled globally
+
+  ### 2. Clean Architecture
+  - [ ] Domain layer NEVER imports from outer layers
+  - [ ] Repositories use domain entities, NOT DTOs
+  - [ ] Services use repositories via interfaces
+  - [ ] Controllers handle DTOs and call services
+  - [ ] No business logic in controllers
+
+  ### 3. SOLID Principles
+  - [ ] Single Responsibility: Classes do one thing
+  - [ ] Open/Closed: Use Strategy/Factory for extensibility (no switch/if-else chains)
+  - [ ] Dependency Inversion: Depend on abstractions (interfaces), not concretions
+
+  ### 4. Database Validation
+  **Entities & Migrations:**
+  - [ ] New tables have migration in `libs/app-database/migrations/`
+  - [ ] Migration has functional `up` and `down`
+  - [ ] Kysely types updated in `libs/app-database/src/types/Database.ts`
+
+  **Repository Patterns:**
+  - [ ] Repositories use Kysely query builder
+  - [ ] No raw SQL strings (use parametrized queries)
+  - [ ] No double-parse/stringify for JSONB fields
+
+  **JSONB Validation:**
+  - [ ] No `JSON.parse()` on JSONB fields (Kysely auto-parses)
+  - [ ] No `JSON.stringify()` before insert (Kysely auto-stringifies)
+
+  ### 5. Security Validation (OWASP)
+
+  **Injection (Critical):**
+  - [ ] Queries parametrized (no string concatenation)
+  - [ ] Inputs validated with class-validator decorators
+
+  **Authentication (Critical):**
+  - [ ] Guards applied to protected routes
+  - [ ] JWT tokens not exposed in logs/responses
+
+  **Data Exposure (Critical):**
+  - [ ] Credentials encrypted via IEncryptionService
+  - [ ] Logs without sensitive data (passwords, tokens, API keys)
+
+  **Access Control (Critical - Multi-Tenancy):**
+  - [ ] EVERY query filters by `account_id` (if multi-tenancy in CLAUDE.md)
+  - [ ] Ownership validated before operations
+  - [ ] `account_id` from JWT (NOT from request body)
+
+  **Configuration (High):**
+  - [ ] CORS restricted (not `origin: '*'` in production)
+  - [ ] Secrets via environment variables
+  - [ ] New env vars documented in `.env.example`
+
+  **XSS (High):**
+  - [ ] Outputs sanitized
+  - [ ] URLs validated before use
+
+  **Dependencies (High):**
+  - [ ] No critical/high vulnerabilities (check with `npm audit` if unsure)
+
+  **Mass Assignment (Medium):**
+  - [ ] DTOs explicit (no spread of body)
+  - [ ] No direct assignment from request to entity
+
+  ### 6. Code Quality
+  - [ ] No `any` types (use explicit types or `unknown`)
+  - [ ] Interfaces/Types for complex objects
+  - [ ] Function returns typed explicitly
+  - [ ] No `console.log` (use injected logger)
+  - [ ] No `debugger` statements
+  - [ ] No commented code
+  - [ ] No unused imports
+  - [ ] No magic numbers (use named constants)
+  - [ ] No hardcoded URLs/endpoints
+
+  ### 7. Error Handling
+  - [ ] Use NestJS exceptions (BadRequestException, NotFoundException, etc.)
+  - [ ] Don't return `null` when should throw NotFoundException
+  - [ ] Errors with descriptive messages
+
+  ### 8. Contract & Runtime Validation
+  - [ ] Backend DTOs mirrored as frontend interfaces
+  - [ ] Enums mirrored with same values
+  - [ ] Date fields: Date in backend, string in frontend (JSON serialization)
+
+  ### 8.5. Project Patterns Validation (if project-patterns skill exists)
+  - [ ] Logging follows documented pattern (pattern-search.sh backend "Logging")
+  - [ ] Validation follows documented pattern (pattern-search.sh backend "Validation")
+  - [ ] Error handling follows documented pattern (pattern-search.sh backend "Error Handling")
+  - [ ] Database interaction follows documented pattern (pattern-search.sh backend "Database Interaction")
+
+  **Database Patterns (from pattern-search.sh database):**
+  - [ ] Migrations follow documented pattern (pattern-search.sh database "Migrations")
+  - [ ] Connection follows documented pattern (pattern-search.sh database "Connection Strategy")
+
+  ### 9. Product Validation (CRITICAL)
+
+  Read skill `add-delivery-validation` before validating.
+
+  **For EACH requirement in about.md:**
+
+  **Functional Requirements (RF):**
+  - [ ] RF01: [description] → Implementation: [file:line] → status
+
+  **Business Rules (RN):**
+  - [ ] RN01: [description] → Logic: [file:line] → status
+
+  **Prerequisites Validation:**
+  For each requirement, check if implicit dependencies exist:
+  - [ ] Does requirement assume data/fields exist? Verify entity has them.
+  - [ ] Does requirement assume another feature exists? Verify endpoint/component exists.
+  - [ ] Does requirement assume configuration? Verify env vars/config exists.
+
+  **Product Status:**
+  - If ALL requirements implemented AND prerequisites OK → PASSED
+  - If ANY requirement missing OR prerequisite missing → BLOCKED
+
+  ## RULES
+  - NO questions — fix issues automatically
+  - Use skill patterns as source of truth
+  - Missing components from plan.md = CRITICAL violation
+  - Missing prerequisites = CRITICAL (report, don't assume)
+  - Fix ALL code violations (no deferrals)
+  - For missing requirements: REPORT (cannot auto-fix product scope)
+  - DO NOT run build (coordinator will do it)
+
+  ## REPORT FORMAT
+  Return: Files Reviewed count, Issues Found by Category (Project Patterns, Architecture, Database, Security, Code Quality, Contracts), Issues Fixed (file:line, severity, description, fix), Files Modified, Severity Summary, Product Validation (RF status, RN status, Prerequisites), Product Status (PASSED/BLOCKED), Score X/10 (deduct 2 per critical, 1 per high, 0.5 per medium, MINUS 5 if product BLOCKED).
+```
+
+---
+
+## STEP 5: Consolidate Findings
+
+### 5.1 Process Reviewer Outputs
+
+**GATE: ALL reviewers must return before proceeding.**
+
+**IF a finding has unclear root cause** (symptom reported but cause not isolated, OR severity disputed between reviewers, OR finding crosses layers): LOAD .kilocode/skills/add-investigation/SKILL.md and apply Phase 3 (Differential Diagnosis) before classifying severity. Do NOT auto-correct findings whose cause has not been confirmed via differential diagnosis — escalate them to the user with the diagnostic table.
+
+**After ALL reviewers return:**
+
+1. **Merge findings:**
+   - Combine issues from Frontend + Backend reviewers
+   - Deduplicate if same issue reported by multiple reviewers
+
+2. **Aggregate metrics:**
+   - Total files reviewed
+   - Total issues found/fixed
+   - Severity breakdown
+   - Product validation status (from Backend Reviewer)
+
+3. **Calculate overall score:**
+   ```
+   Frontend Score: X/10
+   Backend Score: Y/10
+   Overall Score: (X + Y) / 2
+
+   Product Status: PASSED/BLOCKED
+   ```
+
+---
+
+## STEP 6: Build Verification
+
+```bash
+npm run build
+```
+
+**Expected:** Build succeeds.
+
+**If build fails:**
+- Review build errors
+- Identify which corrections broke the build
+- Fix build errors automatically
+- Re-run build
+- Repeat until build passes
+
+**GATE: Do NOT proceed to STEP 7 until build passes 100%.**
+
+---
+
+## STEP 7: Validation Gates Re-Run (INDEPENDENT)
+
+The reviewer's job is to verify, not to trust. Existing `[x]` ticks on `## Validation Gates` are evidence of past success — they are NOT evidence of current correctness. This step re-establishes the truth.
+
+### 7.1 Pre-condition
+
+Read CLAUDE.md `validation_gates` block.
+
+- **Block missing** → emit one-line nudge `Note: validation_gates not detected in CLAUDE.md. Run /add.xray to enable validation gates.` and skip the rest of STEP 7.
+- **Block present** → proceed.
+
+### 7.2 Re-Run Procedure
+
+Apply the **Validation Gates Procedure (review variant)** from `.kilocode/skills/add-tasks-checklist/SKILL.md`:
+
+1. Compute `TOUCHED_FILES = git diff --name-only` against the feature base.
+2. For EACH `(intent, command)` in `validation_gates`:
+   1. Invoke the command via Bash. Capture stdout/stderr and exit code in this session.
+   2. Exit 0 → confirm `[x]` (or upgrade `[!]`/`[ ]` to `[x]`).
+   3. Exit ≠ 0 → partition failures into `TOUCHED_FAILURES` vs `UNTOUCHED_FAILURES`.
+      - `TOUCHED_FAILURES` non-empty → downgrade the tick to `[!] — REASON: <≤120 chars>`. **Mark review BLOCKED.** Do NOT auto-fix in review (auto-fixes belong to build); surface to user instead.
+      - `UNTOUCHED_FAILURES` only → keep `[x]` and refresh `### Known Issues` (cap 10 + `+N more`).
+3. Write the updated `tasks.md`.
+
+### 7.3 Hard requirements
+
+- Every gate command MUST be invoked via Bash in this session before STEP 8 produces `review.md`.
+- Capture each `(gate, exit_code)` pair for inclusion in the Quality Gate Report.
+- Review status MUST be BLOCKED if any gate is red on a touched file after re-run.
+
+---
+
+## STEP 7.5: Log Iteration (IF corrections applied)
+
+**IF files were modified during review (auto-corrections):**
+
+```bash
+bash .codeadd/scripts/log-jsonl.sh "docs/features/${FEATURE_ID}/iterations.jsonl" "fix" "/check" '"slug":"code-review","what":"Auto-corrected violations from review","files":["<list of modified files>"]'
+```
+
+⛔ DO NOT: Skip iteration logging if files were modified during review.
+
+---
+
+## STEP 8: Quality Gate Report (PRD0034)
+
+**Consolidate all gates into review.md. This file is the merge prerequisite for /add.done.**
+
+### 8.1 Build Quality Gate Report
+
+Collect results from all previous steps:
+
+```markdown
+## Quality Gate Report
+
+| Gate | Status | Details |
+|------|--------|---------|
+| Build | ✅ PASSED / ❌ BLOCKED | npm run build — X errors |
+| Spec Compliance | ✅ PASSED / ⚠️ DIVERGENT / ❌ BLOCKED | X/Y items compliant |
+| Code Review Score | ✅ PASSED / ❌ BLOCKED | X.X/10 (threshold: ≥ 7) |
+| Product Validation | ✅ PASSED / ❌ BLOCKED | RF: X/X, RN: Y/Y |
+| Validation Gates | ✅ PASSED / ⚠️ KNOWN ISSUES / ❌ BLOCKED | One row per gate from STEP 7 with `<command> → exit <code>` (omit row if CLAUDE.md has no validation_gates) |
+
+| **Overall** | **✅ PASSED / ❌ BLOCKED** | **Ready for merge / Issues found** |
+
+> Reviewed at: ${TIMESTAMP}
+> Reviewed by: /add.review (model: ${MODEL})
+```
+
+**Overall = PASSED** only if ALL gates are PASSED or SKIPPED.
+**Overall = BLOCKED** if ANY gate is BLOCKED.
+
+### 8.2 Write review.md
+
+```
+WRITE docs/features/${FEATURE_ID}/review.md
+
+Content:
+# Review: ${FEATURE_ID}
+
+> **Date:** ${TODAY} | **Branch:** ${BRANCH_NAME}
+
+## Quality Gate Report
+[table from 8.1]
+
+## Spec Compliance Audit
+[output from STEP 3.4]
+
+## Code Review Summary
+[aggregated findings from STEP 5]
+
+## Product Validation
+[RF/RN status from Backend Reviewer]
+```
+
+**GATE: review.md MUST be written before outputting console report.**
+- DO NOT: Output console report if review.md write failed
+- DO: Write review.md FIRST, then console
+
+### 8.3 Console Output
+
+Output quality gate summary including: reviewers dispatched (files reviewed per reviewer), issues found/fixed with severity breakdown, spec compliance status, product validation (RF/RN/prerequisites), scores (frontend/backend/overall), gate statuses table, link to review.md, list of modified files, and next steps (add.done if PASSED, fix + re-check if BLOCKED).
+
+---
+
+## Rules
+
+ALWAYS:
+- Check unstaged changes and ask user before staging
+- Load all feature docs and CLAUDE.md before dispatching reviewers
+- Auto-fix all violations without deferrals
+- Verify build passes after applying fixes
+- Output report to console only
+- Track STAGED_CHANGES flag throughout execution
+
+NEVER:
+- Create review.md or any documentation files
+- Use Bash for git commit operations
+- Stage files without explicit user permission
+- Skip product validation for RF, RN, or prerequisites
+- Proceed to report if build is failing
+- Leave code in a non-compiling state
+- Accept "it works" as justification for violations
+- Skip a reviewer if files exist in that area
