@@ -9,6 +9,7 @@ services:
       dockerfile: Dockerfile
       args:
         VITE_WHATSAPP_LINK: ${VITE_WHATSAPP_LINK}
+        VITE_SITE_URL: ${VITE_SITE_URL}
     ports:
       - "3010:80"
     restart: unless-stopped

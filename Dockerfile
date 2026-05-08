@@ -12,7 +12,9 @@ COPY . .
 
 # Build args para variáveis de ambiente Vite
 ARG VITE_WHATSAPP_LINK
+ARG VITE_SITE_URL
 ENV VITE_WHATSAPP_LINK=$VITE_WHATSAPP_LINK
+ENV VITE_SITE_URL=$VITE_SITE_URL
 
 RUN npm run build
 

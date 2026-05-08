@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8"/>
+  <title>OG Image Generator - Fisio no Marketing</title>
+  <style>
+    body { margin: 0; background: #333; display: flex; flex-direction: column; align-items: center; padding: 20px; gap: 20px; font-family: sans-serif; color: white; }
+    p { font-size: 12px; opacity: 0.7; }
+  </style>
+</head>
+<body>
+  <p>OG Image (1200x630) — clique com botão direito → "Salvar imagem como" → salve como <strong>og-image.jpg</strong> na pasta <strong>public/</strong></p>
+  <canvas id="og" width="1200" height="630"></canvas>
+  <script>
+    const canvas = document.getElementById('og');
+    const ctx = canvas.getContext('2d');
+    const W = 1200, H = 630;
+
+    // Background gradient
+    const bg = ctx.createLinearGradient(0, 0, W, H);
+    bg.addColorStop(0, '#0A1628');
+    bg.addColorStop(1, '#0F2240');
+    ctx.fillStyle = bg;
+    ctx.fillRect(0, 0, W, H);
+
+    // Particle dots
+    ctx.fillStyle = 'rgba(0,180,216,0.25)';
+    [[80,80],[120,300],[60,500],[200,150],[150,450],[900,60],[950,200],[1050,400],[1100,150],[980,500]].forEach(([x,y]) => {
+      ctx.beginPath(); ctx.arc(x,y,3,0,Math.PI*2); ctx.fill();
+    });
+
+    // Left icon area - ECG line
+    ctx.strokeStyle = 'rgba(0,180,216,0.5)';
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.moveTo(60, 320);
+    ctx.lineTo(130, 320);
+    ctx.lineTo(150, 280);
+    ctx.lineTo(170, 370);
+    ctx.lineTo(190, 300);
+    ctx.lineTo(220, 320);
+    ctx.lineTo(300, 320);
+    ctx.stroke();
+
+    // Stick figure
+    // Head
+    ctx.strokeStyle = '#00B4D8';
+    ctx.lineWidth = 6;
+    ctx.beginPath();
+    ctx.arc(220, 200, 28, 0, Math.PI*2);
+    ctx.stroke();
+    // Halo ring
+    ctx.strokeStyle = 'rgba(72,202,228,0.5)';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.arc(220, 200, 40, 0, Math.PI*2);
+    ctx.stroke();
+
+    // Body (spine)
+    ctx.strokeStyle = '#00B4D8';
+    ctx.lineWidth = 6;
+    ctx.beginPath();
+    ctx.moveTo(220, 228); ctx.lineTo(220, 340);
+    ctx.stroke();
+
+    // Left arm → ECG direction
+    ctx.beginPath();
+    ctx.moveTo(220, 260); ctx.lineTo(140, 300);
+    ctx.stroke();
+
+    // Right arm → bar chart direction
+    const barGrad = ctx.createLinearGradient(220,260,350,240);
+    barGrad.addColorStop(0,'#00B4D8');
+    barGrad.addColorStop(1,'#06D6A0');
+    ctx.strokeStyle = barGrad;
+    ctx.beginPath();
+    ctx.moveTo(220, 260); ctx.lineTo(340, 230);
+    ctx.stroke();
+
+    // Legs
+    ctx.strokeStyle = '#00B4D8';
+    ctx.beginPath();
+    ctx.moveTo(220, 340); ctx.lineTo(180, 420);
+    ctx.moveTo(220, 340); ctx.lineTo(260, 420);
+    ctx.stroke();
+
+    // Bar chart
+    const bars = [
+      {h:60, x:290, color:'rgba(0,180,216,0.6)'},
+      {h:90, x:320, color:'rgba(0,180,216,0.7)'},
+      {h:120, x:350, color:'rgba(0,180,216,0.85)'},
+      {h:150, x:380, color:'rgba(6,214,160,0.9)'},
+      {h:190, x:410, color:'#06D6A0'},
+    ];
+    bars.forEach(b => {
+      ctx.fillStyle = b.color;
+      ctx.beginPath();
+      ctx.roundRect(b.x, 430 - b.h, 22, b.h, 4);
+      ctx.fill();
+    });
+
+    // Vertical divider
+    ctx.strokeStyle = 'rgba(0,180,216,0.15)';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(480, 80); ctx.lineTo(480, 550);
+    ctx.stroke();
+
+    // === RIGHT SIDE — TEXT ===
+
+    // Brand tag
+    ctx.fillStyle = 'rgba(6,214,160,0.15)';
+    ctx.beginPath();
+    ctx.roundRect(510, 100, 260, 36, 18);
+    ctx.fill();
+    ctx.fillStyle = '#06D6A0';
+    ctx.font = 'bold 14px monospace';
+    ctx.fillText('● FISIO NO MARKETING', 525, 123);
+
+    // Main headline
+    ctx.fillStyle = '#FFFFFF';
+    ctx.font = 'bold 78px "Arial Black", Arial';
+    ctx.fillText('ENTRE', 510, 230);
+
+    ctx.fillStyle = '#00B4D8';
+    ctx.fillText('GRÁTIS.', 510, 320);
+
+    ctx.fillStyle = '#FFFFFF';
+    ctx.font = 'bold 32px Arial';
+    ctx.fillText('30 dias na plataforma de IA', 510, 390);
+    ctx.fillText('para fisioterapeutas.', 510, 430);
+
+    // CTA badge
+    const badgeGrad = ctx.createLinearGradient(510, 470, 750, 510);
+    badgeGrad.addColorStop(0,'#00B4D8');
+    badgeGrad.addColorStop(1,'#06D6A0');
+    ctx.fillStyle = badgeGrad;
+    ctx.beginPath();
+    ctx.roundRect(510, 468, 330, 54, 27);
+    ctx.fill();
+    ctx.fillStyle = '#FFFFFF';
+    ctx.font = 'bold 20px Arial';
+    ctx.fillText('QUERO ENTRAR NO GRUPO →', 525, 501);
+
+    // Bottom footer
+    ctx.fillStyle = 'rgba(148,163,184,0.4)';
+    ctx.font = '14px monospace';
+    ctx.fillText('Sem cartão · Sem compromisso · Cancele quando quiser', 510, 570);
+
+    // Subtle bottom border glow
+    const glow = ctx.createLinearGradient(0, H-4, W, H-4);
+    glow.addColorStop(0,'transparent');
+    glow.addColorStop(0.5,'rgba(0,180,216,0.6)');
+    glow.addColorStop(1,'transparent');
+    ctx.strokeStyle = glow;
+    ctx.lineWidth = 4;
+    ctx.beginPath();
+    ctx.moveTo(0, H-2); ctx.lineTo(W, H-2);
+    ctx.stroke();
+  </script>
+</body>
+</html>
