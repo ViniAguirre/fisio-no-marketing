@@ -3,7 +3,6 @@ version: "3.8"
 services:
   fisio-landing:
     image: fisio-no-marketing:latest
-    container_name: fisio-landing
     build:
       context: .
       dockerfile: Dockerfile
@@ -12,10 +11,20 @@ services:
         VITE_SITE_URL: ${VITE_SITE_URL}
     ports:
       - "3010:80"
-    restart: unless-stopped
     environment:
       - TZ=America/Sao_Paulo
-    labels:
-      # Labels para Traefik (se usar reverse proxy no VPS)
-      # Remova esta seção se não usar Traefik
-      - "traefik.enable=false"
+    networks:
+      - default
+      - minha_rede
+    deploy:
+      labels:
+        - "traefik.enable=true"
+        - "traefik.docker.network=minha_rede"
+        - "traefik.http.routers.fisio_lp.rule=Host(`lp.fisioterapeutanomarketing.com.br`)"
+        - "traefik.http.routers.fisio_lp.entrypoints=web,websecure"
+        - "traefik.http.routers.fisio_lp.tls=true"
+        - "traefik.http.services.fisio_lp.loadbalancer.server.port=80"
+
+networks:
+  minha_rede:
+    external: true
