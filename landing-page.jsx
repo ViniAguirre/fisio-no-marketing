@@ -170,18 +170,22 @@ function ParticleBG() {
 
 // ── CTA BUTTON ──────────────────────────────────────────────
 function CTAButton({ large = false, className = "" }) {
+  const sizeClasses = large
+    ? "w-full max-w-[19rem] justify-center px-5 py-3.5 text-sm sm:w-auto sm:max-w-none sm:px-8 sm:py-4 sm:text-base md:px-10 md:py-5 md:text-lg"
+    : "justify-center px-5 py-3 text-sm sm:px-8 sm:py-4 sm:text-base";
+
   return (
     <a href={WHATSAPP_LINK} target="_blank" rel="noopener noreferrer"
-      className={`inline-flex items-center gap-3 font-bold rounded-full transition-all duration-300 hover:scale-105 ${large ? "px-10 py-5 text-lg" : "px-8 py-4 text-base"} ${className}`}
+      className={`inline-flex min-h-[48px] items-center gap-2 rounded-full text-center font-bold leading-tight transition-all duration-300 hover:scale-105 active:scale-[0.98] sm:gap-3 ${sizeClasses} ${className}`}
       style={{
         background: `linear-gradient(135deg, ${C.teal}, ${C.green})`,
         color: C.white,
         boxShadow: `0 0 30px rgba(0,180,216,0.35), 0 8px 32px rgba(0,0,0,0.3)`,
         animation: "pulse-glow 2.5s ease-in-out infinite",
       }}>
-      <WhatsAppIcon size={large ? 28 : 22} />
-      <span>QUERO ENTRAR NO GRUPO GRÁTIS</span>
-      <span style={{ fontSize: large ? 24 : 20 }}>→</span>
+      <WhatsAppIcon size={large ? 24 : 20} />
+      <span>ENTRAR NA COMUNIDADE</span>
+      <span className="hidden sm:inline" style={{ fontSize: large ? 24 : 20 }}>→</span>
     </a>
   );
 }
@@ -192,7 +196,7 @@ function SectionHeader({ label, title, titleAccent, subtitle }) {
   return (
     <FadeIn>
       {label && <p className="text-sm font-mono font-bold tracking-widest mb-3" style={{ color: C.teal, letterSpacing: "0.2em" }}>— {label}</p>}
-      <h2 className="text-4xl md:text-5xl font-black mb-2" style={{ fontFamily: "'Big Shoulders Display', sans-serif", color: C.white, lineHeight: 1.05 }}>
+      <h2 className="text-3xl md:text-5xl font-black mb-2" style={{ fontFamily: "'Big Shoulders Display', sans-serif", color: C.white, lineHeight: 1.05 }}>
         {title}
         {titleAccent && <span style={{ color: C.teal, display: "block" }}>{titleAccent}</span>}
       </h2>
@@ -258,10 +262,10 @@ export default function FisioLandingPage() {
       `}</style>
 
       {/* ═══ HEADER ═══ */}
-      <header className="fixed top-0 left-0 right-0 z-50 px-6 py-4 flex items-center justify-between" style={{ background: scrollY > 50 ? "rgba(10,22,40,0.95)" : "transparent", backdropFilter: scrollY > 50 ? "blur(12px)" : "none", borderBottom: scrollY > 50 ? `1px solid rgba(0,180,216,0.1)` : "none", transition: "all 0.3s ease" }}>
+      <header className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-4 py-3 md:px-6 md:py-4" style={{ background: scrollY > 50 ? "rgba(10,22,40,0.95)" : "transparent", backdropFilter: scrollY > 50 ? "blur(12px)" : "none", borderBottom: scrollY > 50 ? `1px solid rgba(0,180,216,0.1)` : "none", transition: "all 0.3s ease" }}>
         <div className="flex items-center gap-3">
           <SymbolMark size={36} />
-          <span className="font-bold text-sm tracking-wide" style={{ fontFamily: "'Big Shoulders Display', sans-serif", fontSize: 18, color: C.white }}>FISIO NO MARKETING</span>
+          <span className="font-bold text-sm tracking-wide" style={{ fontFamily: "'Big Shoulders Display', sans-serif", fontSize: 17, color: C.white }}>FISIO NO MARKETING</span>
         </div>
         <a href={WHATSAPP_LINK} target="_blank" rel="noopener noreferrer" className="hidden md:inline-flex items-center gap-2 px-5 py-2 rounded-full text-sm font-bold transition-all hover:scale-105" style={{ border: `1px solid ${C.teal}`, color: C.teal }}>
           <WhatsAppIcon size={16} /> Entrar na comunidade
@@ -269,30 +273,30 @@ export default function FisioLandingPage() {
       </header>
 
       {/* ═══ HERO ═══ */}
-      <section className="relative min-h-screen flex items-center justify-center px-6 overflow-hidden">
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden px-4 py-20 md:px-6">
         <ParticleBG />
-        <div className="relative z-10 text-center max-w-4xl mx-auto pt-20">
+        <div className="relative z-10 mx-auto max-w-4xl pt-12 text-center md:pt-20">
           <FadeIn delay={0.1}>
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-mono font-bold tracking-widest mb-8" style={{ background: "rgba(6,214,160,0.12)", border: `1px solid rgba(6,214,160,0.3)`, color: C.green }}>
+            <div className="inline-flex max-w-full items-center gap-2 rounded-full px-3 py-2 text-[10px] font-mono font-bold tracking-wider sm:px-4 sm:text-xs sm:tracking-widest mb-6 md:mb-8" style={{ background: "rgba(6,214,160,0.12)", border: `1px solid rgba(6,214,160,0.3)`, color: C.green }}>
               <span className="w-2 h-2 rounded-full" style={{ background: C.green, animation: "pulse-glow 2s infinite" }} />
               OFERTA DE LANÇAMENTO · 30 DIAS GRÁTIS
             </div>
           </FadeIn>
           <FadeIn delay={0.3}>
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-black mb-6" style={{ fontFamily: "'Big Shoulders Display', sans-serif", lineHeight: 0.95, letterSpacing: "1px" }}>
+            <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black mb-5 md:mb-6" style={{ fontFamily: "'Big Shoulders Display', sans-serif", lineHeight: 0.98, letterSpacing: "1px" }}>
               Fisioterapeutas que vendem, <span style={{ color: C.teal }}>crescem.</span>
               <br/>
               <span style={{ color: C.gray, fontSize: "0.65em" }}>Os que não vendem, somem.</span>
             </h1>
           </FadeIn>
           <FadeIn delay={0.5}>
-            <p className="text-lg md:text-xl mb-10 max-w-2xl mx-auto" style={{ color: C.gray, lineHeight: 1.6 }}>
+            <p className="mx-auto mb-8 max-w-2xl text-base md:text-xl md:mb-10" style={{ color: C.gray, lineHeight: 1.6 }}>
               Entre na comunidade que está transformando fisioterapeutas em empresários com inteligência artificial.
             </p>
           </FadeIn>
           <FadeIn delay={0.7}>
             <CTAButton large />
-            <p className="mt-5 text-sm font-mono" style={{ color: C.grayDark, letterSpacing: "0.05em" }}>
+            <p className="mx-auto mt-4 max-w-xs text-xs leading-relaxed sm:max-w-none sm:text-sm font-mono" style={{ color: C.grayDark, letterSpacing: "0.05em" }}>
               ✓ Sem cartão &nbsp;&nbsp; ✓ 30 dias grátis na plataforma &nbsp;&nbsp; ✓ Saia quando quiser
             </p>
           </FadeIn>
@@ -303,10 +307,10 @@ export default function FisioLandingPage() {
       </section>
 
       {/* ═══ A LINHA MÁGICA (storytelling) ═══ */}
-      <section className="py-24 px-6 relative">
+      <section className="relative px-4 py-16 md:px-6 md:py-24">
         <div className="max-w-4xl mx-auto">
           <SectionHeader label="A LINHA MÁGICA" title="Três verdades." titleAccent="Uma evolução." />
-          <div className="mt-20 relative">
+          <div className="relative mt-14 md:mt-20">
             {/* Vertical connecting line */}
             <div className="absolute left-8 md:left-12 top-0 bottom-0 w-px" style={{ background: `linear-gradient(to bottom, ${C.blue}, ${C.teal}, ${C.green})`, opacity: 0.4 }} />
             
@@ -334,17 +338,17 @@ export default function FisioLandingPage() {
       </section>
 
       {/* ═══ PARA QUEM É ═══ */}
-      <section className="py-24 px-6" style={{ background: C.navy2 }}>
+      <section className="px-4 py-16 md:px-6 md:py-24" style={{ background: C.navy2 }}>
         <div className="max-w-6xl mx-auto">
           <SectionHeader label="PARA QUEM É" title="Você se" titleAccent="reconhece aqui?" />
-          <div className="grid md:grid-cols-3 gap-6 mt-16">
+          <div className="grid gap-5 md:grid-cols-3 md:gap-6 mt-12 md:mt-16">
             {[
               { emoji: "🎓", title: "RECÉM-FORMADO?", text: "Você tem o conhecimento clínico, mas o telefone não toca. Posta nas redes, mas ninguém marca consulta. Você precisa de um caminho — e nós temos o mapa." },
               { emoji: "⏰", title: "SEM TEMPO PRA NADA?", text: "Atende o dia inteiro e ainda precisa responder mensagens, cobrar, postar conteúdo, agendar... Nossa IA faz isso por você. 24 horas por dia." },
               { emoji: "🚀", title: "QUER ESCALAR?", text: "Já tem clínica, equipe, faturamento. Mas sente que poderia crescer 3x mais rápido. Tecnologia + estratégia + comunidade = escala real." },
             ].map((card, i) => (
               <FadeIn key={i} delay={i * 0.1}>
-                <div className="p-8 rounded-xl h-full transition-all duration-300 hover:-translate-y-1" style={{ background: "rgba(0,180,216,0.04)", border: "1px solid rgba(0,180,216,0.1)" }}>
+                <div className="h-full rounded-xl p-6 transition-all duration-300 hover:-translate-y-1 md:p-8" style={{ background: "rgba(0,180,216,0.04)", border: "1px solid rgba(0,180,216,0.1)" }}>
                   <span className="text-4xl mb-4 block">{card.emoji}</span>
                   <h3 className="text-xl font-bold mb-3" style={{ fontFamily: "'Big Shoulders Display', sans-serif", color: C.teal }}>{card.title}</h3>
                   <p className="text-sm leading-relaxed" style={{ color: C.gray }}>{card.text}</p>
@@ -356,23 +360,23 @@ export default function FisioLandingPage() {
       </section>
 
       {/* ═══ OFERTA DE LANÇAMENTO ═══ */}
-      <section className="py-24 px-6">
+      <section className="px-4 py-16 md:px-6 md:py-24">
         <div className="max-w-3xl mx-auto">
           <FadeIn>
-            <div className="relative p-10 md:p-14 rounded-2xl overflow-hidden" style={{ background: `linear-gradient(135deg, ${C.navy2}, #162a4a)`, border: `2px solid rgba(0,180,216,0.25)` }}>
+            <div className="relative overflow-hidden rounded-2xl p-6 sm:p-8 md:p-14" style={{ background: `linear-gradient(135deg, ${C.navy2}, #162a4a)`, border: `2px solid rgba(0,180,216,0.25)` }}>
               <div className="absolute inset-0 rounded-2xl" style={{ boxShadow: `inset 0 0 60px rgba(0,180,216,0.08)` }} />
               <div className="relative z-10">
-                <p className="text-xs font-mono font-bold tracking-widest mb-6" style={{ color: C.orange }}>🚀 OFERTA EXCLUSIVA DE LANÇAMENTO</p>
-                <h2 className="text-4xl md:text-5xl font-black mb-2" style={{ fontFamily: "'Big Shoulders Display', sans-serif", lineHeight: 1.05 }}>
+                <p className="text-[11px] font-mono font-bold tracking-wider mb-5 md:text-xs md:tracking-widest md:mb-6" style={{ color: C.orange }}>🚀 OFERTA EXCLUSIVA DE LANÇAMENTO</p>
+                <h2 className="text-3xl md:text-5xl font-black mb-2" style={{ fontFamily: "'Big Shoulders Display', sans-serif", lineHeight: 1.05 }}>
                   ENTRE GRÁTIS.
                 </h2>
-                <h2 className="text-4xl md:text-5xl font-black mb-2" style={{ fontFamily: "'Big Shoulders Display', sans-serif", lineHeight: 1.05, color: C.teal }}>
+                <h2 className="text-3xl md:text-5xl font-black mb-2" style={{ fontFamily: "'Big Shoulders Display', sans-serif", lineHeight: 1.05, color: C.teal }}>
                   USE 30 DIAS.
                 </h2>
-                <h2 className="text-4xl md:text-5xl font-black mb-8" style={{ fontFamily: "'Big Shoulders Display', sans-serif", lineHeight: 1.05 }}>
+                <h2 className="text-3xl md:text-5xl font-black mb-6 md:mb-8" style={{ fontFamily: "'Big Shoulders Display', sans-serif", lineHeight: 1.05 }}>
                   SEM PAGAR NADA.
                 </h2>
-                <div className="space-y-3 mb-10">
+                <div className="mb-8 space-y-3 md:mb-10">
                   {[
                     "Acesso ao grupo de WhatsApp da comunidade",
                     "Aula semanal ao vivo com Vinicius Aguirre",
@@ -387,7 +391,7 @@ export default function FisioLandingPage() {
                         <span className="mt-1 text-sm" style={{ color: C.green }}>✓</span>
                         <span className={`text-base ${isHighlight ? "font-bold" : ""}`} style={{ color: isHighlight ? C.green : C.gray }}>
                           {text}
-                          {isHighlight && <span className="text-xs ml-2 px-2 py-0.5 rounded-full font-mono" style={{ background: "rgba(6,214,160,0.15)", color: C.green }}>14 módulos de IA</span>}
+                          {isHighlight && <span className="mt-2 inline-flex rounded-full px-2 py-0.5 text-xs font-mono sm:ml-2 sm:mt-0" style={{ background: "rgba(6,214,160,0.15)", color: C.green }}>14 módulos de IA</span>}
                         </span>
                       </div>
                     );
@@ -402,10 +406,10 @@ export default function FisioLandingPage() {
       </section>
 
       {/* ═══ PLATAFORMA AD AI STUDIO ═══ */}
-      <section className="py-24 px-6" style={{ background: C.navy2 }}>
+      <section className="px-4 py-16 md:px-6 md:py-24" style={{ background: C.navy2 }}>
         <div className="max-w-6xl mx-auto">
           <SectionHeader label="A PLATAFORMA" title="AD AI Studio" titleAccent="14 módulos de IA." subtitle="Tudo o que um fisioterapeuta precisa para atrair, vender e crescer — sem precisar virar marketeiro." />
-          <div className="grid md:grid-cols-2 gap-12 mt-16">
+          <div className="grid gap-8 md:grid-cols-2 md:gap-12 mt-12 md:mt-16">
             {[
               { title: "Estratégia & Gestão", modules: modules1, accent: C.teal },
               { title: "Produção & Crescimento", modules: modules2, accent: C.green },
@@ -432,12 +436,12 @@ export default function FisioLandingPage() {
       </section>
 
       {/* ═══ SOBRE VINICIUS ═══ */}
-      <section className="py-24 px-6">
+      <section className="px-4 py-16 md:px-6 md:py-24">
         <div className="max-w-4xl mx-auto">
           <FadeIn>
-            <div className="md:flex items-start gap-12">
-              <div className="flex-shrink-0 mb-8 md:mb-0">
-                <div className="w-48 h-48 rounded-2xl overflow-hidden" style={{ border: `1px solid rgba(0,180,216,0.25)`, boxShadow: "0 10px 30px rgba(0,0,0,0.25)" }}>
+            <div className="items-start gap-12 md:flex">
+              <div className="mb-8 flex flex-shrink-0 justify-center md:mb-0">
+                <div className="h-44 w-44 overflow-hidden rounded-2xl sm:h-48 sm:w-48" style={{ border: `1px solid rgba(0,180,216,0.25)`, boxShadow: "0 10px 30px rgba(0,0,0,0.25)" }}>
                   <img
                     src="/vinicius-aguirre.png"
                     alt="Foto de Vinicius Aguirre"
@@ -445,22 +449,22 @@ export default function FisioLandingPage() {
                   />
                 </div>
               </div>
-              <div>
+              <div className="text-center md:text-left">
                 <p className="text-xs font-mono font-bold tracking-widest mb-3" style={{ color: C.teal }}>QUEM ESTÁ POR TRÁS</p>
-                <h2 className="text-4xl font-black mb-2" style={{ fontFamily: "'Big Shoulders Display', sans-serif" }}>VINICIUS AGUIRRE</h2>
+                <h2 className="text-3xl font-black mb-2 sm:text-4xl" style={{ fontFamily: "'Big Shoulders Display', sans-serif" }}>VINICIUS AGUIRRE</h2>
                 <p className="text-sm font-mono mb-6" style={{ color: C.gray }}>Fundador & Estrategista</p>
                 <p className="text-base leading-relaxed mb-6" style={{ color: C.gray }}>
                   Fisioterapeuta que entendeu cedo que o conhecimento clínico precisa caminhar lado a lado com gestão e tecnologia.
                 </p>
                 <div className="space-y-2 mb-8">
                   {["Graduação em Fisioterapia", "MBA em Marketing Digital", "Pós-Graduação em Economia", "Pós-Graduação em Ciência de Dados e Big Data Analytics"].map((f, i) => (
-                    <div key={i} className="flex items-center gap-2 text-sm">
+                    <div key={i} className="flex items-start gap-2 text-left text-sm">
                       <span style={{ color: C.teal }}>●</span>
                       <span style={{ color: C.gray }}>{f}</span>
                     </div>
                   ))}
                 </div>
-                <p className="text-xl font-bold italic" style={{ fontFamily: "'Big Shoulders Display', sans-serif", color: C.cyan }}>
+                <p className="text-lg font-bold italic sm:text-xl" style={{ fontFamily: "'Big Shoulders Display', sans-serif", color: C.cyan }}>
                   "Fala como fisio. Pensa como dado. Executa como estrategista."
                 </p>
               </div>
@@ -470,10 +474,10 @@ export default function FisioLandingPage() {
       </section>
 
       {/* ═══ COMO FUNCIONA ═══ */}
-      <section className="py-24 px-6" style={{ background: C.navy2 }}>
+      <section className="px-4 py-16 md:px-6 md:py-24" style={{ background: C.navy2 }}>
         <div className="max-w-4xl mx-auto text-center">
           <SectionHeader label="COMO FUNCIONA" title="3 passos." titleAccent="30 segundos." />
-          <div className="grid md:grid-cols-3 gap-8 mt-16">
+          <div className="grid gap-8 md:grid-cols-3 mt-12 md:mt-16">
             {[
               { num: "01", title: "Clique e entre", desc: "Entre no grupo gratuito de WhatsApp em menos de 30 segundos.", color: C.teal },
               { num: "02", title: "Receba acesso", desc: "Você recebe o link da plataforma e o convite da primeira aula ao vivo.", color: C.cyan },
@@ -492,9 +496,9 @@ export default function FisioLandingPage() {
       </section>
 
       {/* ═══ GARANTIAS ═══ */}
-      <section className="py-16 px-6">
+      <section className="px-4 py-12 md:px-6 md:py-16">
         <div className="max-w-4xl mx-auto">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-4">
             {[
               ["🔒", "Sem cartão de crédito"],
               ["🚫", "Sem cobrança automática"],
@@ -502,7 +506,7 @@ export default function FisioLandingPage() {
               ["👥", "Comunidade ativa"],
             ].map(([emoji, text], i) => (
               <FadeIn key={i} delay={i * 0.08}>
-                <div className="text-center p-4 rounded-lg" style={{ background: "rgba(0,180,216,0.04)", border: "1px solid rgba(0,180,216,0.08)" }}>
+                <div className="rounded-lg p-3 text-center sm:p-4" style={{ background: "rgba(0,180,216,0.04)", border: "1px solid rgba(0,180,216,0.08)" }}>
                   <span className="text-2xl block mb-2">{emoji}</span>
                   <p className="text-xs font-bold" style={{ color: C.gray }}>{text}</p>
                 </div>
@@ -513,7 +517,7 @@ export default function FisioLandingPage() {
       </section>
 
       {/* ═══ FAQ ═══ */}
-      <section className="py-24 px-6" style={{ background: C.navy2 }}>
+      <section className="px-4 py-16 md:px-6 md:py-24" style={{ background: C.navy2 }}>
         <div className="max-w-3xl mx-auto">
           <SectionHeader label="PERGUNTAS FREQUENTES" title="Tudo que você" titleAccent="precisa saber." />
           <div className="mt-12 space-y-3">
@@ -537,12 +541,12 @@ export default function FisioLandingPage() {
       </section>
 
       {/* ═══ CTA FINAL ═══ */}
-      <section className="py-32 px-6 text-center relative overflow-hidden">
+      <section className="relative overflow-hidden px-4 py-20 text-center md:px-6 md:py-32">
         <div className="absolute inset-0" style={{ background: `radial-gradient(ellipse at center, rgba(0,180,216,0.08) 0%, transparent 70%)` }} />
         <div className="relative z-10 max-w-3xl mx-auto">
           <FadeIn>
             <SymbolMark size={80} className="mx-auto mb-8" />
-            <h2 className="text-4xl md:text-6xl font-black mb-6" style={{ fontFamily: "'Big Shoulders Display', sans-serif", lineHeight: 1.05 }}>
+            <h2 className="text-3xl md:text-6xl font-black mb-6" style={{ fontFamily: "'Big Shoulders Display', sans-serif", lineHeight: 1.05 }}>
               Sua próxima década na fisioterapia
               <span style={{ color: C.teal, display: "block" }}>começa em um clique.</span>
             </h2>
@@ -553,13 +557,13 @@ export default function FisioLandingPage() {
       </section>
 
       {/* ═══ FOOTER ═══ */}
-      <footer className="py-10 px-6" style={{ borderTop: `1px solid rgba(0,180,216,0.1)` }}>
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+      <footer className="px-4 py-8 md:px-6 md:py-10" style={{ borderTop: `1px solid rgba(0,180,216,0.1)` }}>
+        <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-3 md:flex-row md:gap-4">
           <div className="flex items-center gap-3">
             <SymbolMark size={28} />
             <span className="text-sm font-bold" style={{ fontFamily: "'Big Shoulders Display', sans-serif", color: C.white }}>FISIO NO MARKETING</span>
           </div>
-          <p className="text-xs font-mono" style={{ color: C.grayDark }}>© 2026 Vinicius Aguirre · Todos os direitos reservados</p>
+          <p className="whitespace-nowrap text-center text-[9px] leading-relaxed sm:text-xs md:text-right font-mono" style={{ color: C.grayDark }}>© 2026 Vinicius Aguirre · Todos os direitos reservados</p>
         </div>
       </footer>
     </div>
