@@ -5,7 +5,11 @@ import { useState, useEffect, useRef } from "react";
 // ═══════════════════════════════════════════════════════════════
 
 const runtimeConfig = typeof window !== "undefined" ? (window.__APP_CONFIG__ || {}) : {};
-const WHATSAPP_LINK = runtimeConfig.VITE_WHATSAPP_LINK || import.meta.env.VITE_WHATSAPP_LINK || "#"; // Configure in Portainer/.env: VITE_WHATSAPP_LINK=https://chat.whatsapp.com/...
+const DEFAULT_WHATSAPP_LINK = "https://chat.whatsapp.com/DnKK9Wzz9uB8QC72QYuBum";
+const rawWhatsAppLink = String(
+  runtimeConfig.VITE_WHATSAPP_LINK || import.meta.env.VITE_WHATSAPP_LINK || DEFAULT_WHATSAPP_LINK
+).trim();
+const WHATSAPP_LINK = rawWhatsAppLink.startsWith("http") ? rawWhatsAppLink : DEFAULT_WHATSAPP_LINK;
 
 // ── BRAND COLORS ────────────────────────────────────────────────
 const C = {
