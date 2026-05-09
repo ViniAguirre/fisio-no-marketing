@@ -432,8 +432,12 @@ export default function FisioLandingPage() {
           <FadeIn>
             <div className="md:flex items-start gap-12">
               <div className="flex-shrink-0 mb-8 md:mb-0">
-                <div className="w-48 h-48 rounded-2xl flex items-center justify-center" style={{ background: `linear-gradient(135deg, ${C.navy2}, #1a3a5c)`, border: `1px solid rgba(0,180,216,0.2)` }}>
-                  <SymbolMark size={100} />
+                <div className="w-48 h-48 rounded-2xl overflow-hidden" style={{ border: `1px solid rgba(0,180,216,0.25)`, boxShadow: "0 10px 30px rgba(0,0,0,0.25)" }}>
+                  <img
+                    src="/vinicius-aguirre.png"
+                    alt="Foto de Vinicius Aguirre"
+                    className="w-full h-full object-cover"
+                  />
                 </div>
               </div>
               <div>
