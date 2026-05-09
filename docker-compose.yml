@@ -13,6 +13,8 @@ services:
       - "3010:80"
     environment:
       - TZ=America/Sao_Paulo
+      - VITE_WHATSAPP_LINK=${VITE_WHATSAPP_LINK}
+      - VITE_SITE_URL=${VITE_SITE_URL}
     networks:
       - default
       - minha_rede

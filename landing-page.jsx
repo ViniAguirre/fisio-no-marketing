@@ -4,7 +4,8 @@ import { useState, useEffect, useRef } from "react";
 // FISIO NO MARKETING — LANDING PAGE
 // ═══════════════════════════════════════════════════════════════
 
-const WHATSAPP_LINK = import.meta.env.VITE_WHATSAPP_LINK || "#"; // Configure in .env: VITE_WHATSAPP_LINK=https://chat.whatsapp.com/...
+const runtimeConfig = typeof window !== "undefined" ? (window.__APP_CONFIG__ || {}) : {};
+const WHATSAPP_LINK = runtimeConfig.VITE_WHATSAPP_LINK || import.meta.env.VITE_WHATSAPP_LINK || "#"; // Configure in Portainer/.env: VITE_WHATSAPP_LINK=https://chat.whatsapp.com/...
 
 // ── BRAND COLORS ────────────────────────────────────────────────
 const C = {
