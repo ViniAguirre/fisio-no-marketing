@@ -259,7 +259,7 @@ export default function FisioLandingPage() {
           <span className="font-bold text-sm tracking-wide" style={{ fontFamily: "'Big Shoulders Display', sans-serif", fontSize: 18, color: C.white }}>FISIO NO MARKETING</span>
         </div>
         <a href={WHATSAPP_LINK} target="_blank" rel="noopener noreferrer" className="hidden md:inline-flex items-center gap-2 px-5 py-2 rounded-full text-sm font-bold transition-all hover:scale-105" style={{ border: `1px solid ${C.teal}`, color: C.teal }}>
-          <WhatsAppIcon size={16} /> Entrar grátis
+          <WhatsAppIcon size={16} /> Entrar na comunidade
         </a>
       </header>
 
@@ -282,7 +282,7 @@ export default function FisioLandingPage() {
           </FadeIn>
           <FadeIn delay={0.5}>
             <p className="text-lg md:text-xl mb-10 max-w-2xl mx-auto" style={{ color: C.gray, lineHeight: 1.6 }}>
-              Entre grátis na comunidade que está transformando fisioterapeutas em empresários com inteligência artificial.
+              Entre na comunidade que está transformando fisioterapeutas em empresários com inteligência artificial.
             </p>
           </FadeIn>
           <FadeIn delay={0.7}>
