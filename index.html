@@ -1,75 +1,570 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Marketing para fisioterapeutas e profissionais da saúde | Fisio no Marketing</title>
+<meta name="description" content="Comunidade gratuita e Pacote Anual para fisioterapeutas e profissionais da saúde organizarem a clínica: site, IA, processos, dados e vendas. Por Vinicius Aguirre.">
+<meta name="keywords" content="marketing para fisioterapeutas, marketing digital para clínica de fisioterapia, marketing para profissionais da saúde, IA para clínicas, site para fisioterapeuta, comunidade de fisioterapeutas, gestão de clínica de fisioterapia">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#0A1628">
+<link rel="canonical" href="__SITE_URL__/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:site_name" content="Fisio no Marketing">
+<meta property="og:title" content="Marketing para fisioterapeutas e profissionais da saúde | Fisio no Marketing">
+<meta property="og:description" content="Você aprendeu a salvar vidas. Agora aprenda a organizar a clínica: comunidade gratuita e Pacote Anual para profissionais da saúde.">
+<meta property="og:url" content="__SITE_URL__/">
+<meta property="og:image" content="__SITE_URL__/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="preload" href="/fonts/big-shoulders-display-latin-900-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/inter-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+@font-face{font-family:"Big Shoulders Display";font-style:normal;font-weight:800;font-display:swap;src:url(/fonts/big-shoulders-display-latin-800-normal.woff2) format("woff2")}
+@font-face{font-family:"Big Shoulders Display";font-style:normal;font-weight:900;font-display:swap;src:url(/fonts/big-shoulders-display-latin-900-normal.woff2) format("woff2")}
+@font-face{font-family:"Inter";font-style:normal;font-weight:400;font-display:swap;src:url(/fonts/inter-latin-400-normal.woff2) format("woff2")}
+@font-face{font-family:"Inter";font-style:normal;font-weight:500;font-display:swap;src:url(/fonts/inter-latin-500-normal.woff2) format("woff2")}
+@font-face{font-family:"Inter";font-style:normal;font-weight:600;font-display:swap;src:url(/fonts/inter-latin-600-normal.woff2) format("woff2")}
+@font-face{font-family:"JetBrains Mono";font-style:normal;font-weight:500;font-display:swap;src:url(/fonts/jetbrains-mono-latin-500-normal.woff2) format("woff2")}
+@font-face{font-family:"Big Shoulders Fallback";src:local("Arial Narrow"),local("Arial");size-adjust:84%;ascent-override:96%;descent-override:24%;line-gap-override:0%}
+@font-face{font-family:"Inter Fallback";src:local("Arial");size-adjust:107%;ascent-override:90%;descent-override:22%;line-gap-override:0%}
+@keyframes hero-rise{from{transform:translateY(14px)}to{transform:none}}
+.hero__copy>*{animation:hero-rise .7s cubic-bezier(.2,.7,.2,1) both}.hero__copy>*:nth-child(2){animation-delay:.08s}.hero__copy>*:nth-child(3){animation-delay:.16s}.hero__copy>*:nth-child(4){animation-delay:.24s}.hero__copy>*:nth-child(5){animation-delay:.32s}
+@media (prefers-reduced-motion:reduce){.hero__copy>*{animation:none}}
+</style>
+<link rel="stylesheet" href="/sc/scrollcraft.css">
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "WebSite",
+   "@id": "__SITE_URL__/#site",
+   "url": "__SITE_URL__/",
+   "name": "Fisio no Marketing",
+   "inLanguage": "pt-BR"
+  },
+  {
+   "@type": "Person",
+   "@id": "__SITE_URL__/#vinicius",
+   "name": "Vinicius Aguirre",
+   "jobTitle": "Fundador do Fisio no Marketing",
+   "description": "Fisioterapeuta de formação que atua com marketing, vendas e inteligência artificial para profissionais da saúde.",
+   "image": "__SITE_URL__/media/vinicius-aguirre.webp"
+  },
+  {
+   "@type": "Service",
+   "name": "Fisio no Marketing: comunidade e Pacote Anual",
+   "serviceType": "Marketing e organização de negócio para fisioterapeutas e profissionais da saúde",
+   "provider": {
+    "@id": "__SITE_URL__/#vinicius"
+   },
+   "areaServed": "BR",
+   "url": "__SITE_URL__/",
+   "offers": [
+    {
+     "@type": "Offer",
+     "name": "Comunidade gratuita",
+     "price": "0",
+     "priceCurrency": "BRL",
+     "description": "Comunidade no WhatsApp com prompts gratuitos, algumas aulas abertas e networking."
+    },
+    {
+     "@type": "Offer",
+     "name": "Pacote Anual",
+     "price": "997.00",
+     "priceCurrency": "BRL",
+     "description": "Encontros semanais, skills de uso diário, código de indicação com 15% de comissão, site e blog otimizados, IA autônoma e participação no sistema de gestão da comunidade. Valor à vista; parcelamento em até 10x no cartão com acréscimo da taxa do cartão. Não inclui VPS, domínio e custo de uso do modelo de IA."
+    }
+   ]
+  },
+  {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "O que é o Fisio no Marketing?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "É um projeto de Vinicius Aguirre, fisioterapeuta de formação que atua com marketing, vendas e inteligência artificial, para ajudar fisioterapeutas e outros profissionais da saúde a organizar a base da própria clínica: identidade digital, uso profissional de IA, processos e decisões baseadas em números."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "A comunidade gratuita é realmente grátis?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Sim. A comunidade no WhatsApp é gratuita e reúne prompts gratuitos, algumas aulas abertas e networking com outros profissionais da saúde que enfrentam as mesmas dificuldades. Basta entrar pelo link do grupo."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Quanto custa o Pacote Anual e como pagar?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "O Pacote Anual custa R$ 997 à vista. Também é possível parcelar em até 10x no cartão, com o acréscimo da taxa do cartão. Não há link de pagamento: o caminho é falar diretamente com Vinicius Aguirre pelo WhatsApp, que combina a forma de pagamento."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "O que está incluso no Pacote Anual de R$ 997?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Encontros semanais por Google Meet; skills usadas no dia a dia (artes, copys, scripts, landing pages e mais); um código de indicação exclusivo com 15% do valor do pacote por novo participante; construção de site e blog otimizados e conectados ao Google pela equipe; uma IA autônoma própria que aprende com o seu negócio e pode atender clientes no WhatsApp; e participação na construção de um sistema de gestão de clínicas feito pela comunidade, com financeiro, marketing, vendas e agenda."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "O que não está incluso no Pacote Anual?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Três custos ficam por conta do participante: o servidor (VPS), de cerca de R$ 40 por mês, cuja configuração a equipe conduz; o domínio, geralmente até R$ 50; e o custo de uso do modelo de IA, que é pessoal e varia conforme o uso."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Como funciona o código de indicação?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Cada participante do Pacote Anual recebe um código exclusivo. Para cada nova pessoa que entra com o seu código, você recebe 15% do valor do pacote. As condições são combinadas com Vinicius no WhatsApp."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "A IA pode responder pacientes no WhatsApp?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Pode ser configurada para isso. Antes de colocar uma IA em contato com pacientes, é preciso respeitar a LGPD e as regras de publicidade e ética do seu conselho profissional (como CREFITO ou CFM). Esse cuidado faz parte da construção junto com a equipe."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "O projeto serve só para fisioterapeutas?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Nasceu da realidade da fisioterapia, mas a base vale para profissionais da saúde que atendem em consultório ou clínica e precisam vender, organizar processos e se preparar para cenários difíceis."
+     }
+    }
+   ]
+  }
+ ]
+}
+</script>
+<style>
+  :root {
+    --sc-canvas:     #0A1628;
+    --sc-surface:    #0F2240;
+    --sc-ink:        #F1F6FB;
+    --sc-ink-soft:   #AAB9CE;
+    --sc-accent:     #00B4D8;
+    --sc-accent-ink: #061225;
+    --sc-green:      #06D6A0;
+    --sc-warn:       #FF6B35;
+    --sc-font-display: "Big Shoulders Display", "Big Shoulders Fallback", "Arial Narrow", sans-serif;
+    --sc-font-text:    "Inter", "Inter Fallback", system-ui, sans-serif;
+    --sc-font-mono:    "JetBrains Mono", ui-monospace, monospace;
+  }
 
-    <!-- ═══ SEO ═══ -->
-    <title>Fisio no Marketing — IA para Fisioterapeutas</title>
-    <meta name="description" content="Entre na comunidade que está transformando fisioterapeutas em empresários com inteligência artificial. 30 dias de acesso completo ao AD AI Studio sem pagar nada." />
-    <meta name="robots" content="index, follow" />
-    <link rel="canonical" href="__SITE_URL__" />
+  body { background: var(--sc-canvas); }
+  .sc-grain:before { inset: 0; } /* sem excesso de 200%: evita falso CLS */
+  .site-bar {
+    position: fixed; inset: 0 0 auto 0; z-index: 50;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1rem var(--sc-gutter);
+    background: linear-gradient(to bottom, rgba(10,22,40,.92), rgba(10,22,40,0));
+  }
+  .brand { display: inline-flex; align-items: center; min-height: 44px; white-space: nowrap; font-family: var(--sc-font-display); font-weight: 700; letter-spacing: .14em; text-transform: uppercase; font-size: .78rem; color: var(--sc-ink); text-decoration: none; }
+  .brand span { color: var(--sc-accent); }
+  .btn {
+    display: inline-flex; align-items: center; gap: .5rem;
+    padding: .95rem 1.4rem; border-radius: 6px;
+    font: 600 .95rem/1 var(--sc-font-text); text-decoration: none;
+    background: var(--sc-accent); color: var(--sc-accent-ink);
+    transition: transform 220ms var(--sc-ease-out), background 220ms;
+  }
+  .btn:hover { background: #48CAE4; transform: translateY(-1px); }
+  .btn--ghost { background: transparent; color: var(--sc-ink); box-shadow: inset 0 0 0 1px rgba(241,246,251,.35); }
+  .btn--ghost:hover { background: rgba(241,246,251,.08); }
+  .bar-cta { white-space: nowrap; min-height: 44px; }
+  .btn:focus-visible, a:focus-visible { outline: 2px solid var(--sc-accent); outline-offset: 3px; }
 
-    <!-- ═══ OPEN GRAPH (WhatsApp, Facebook, LinkedIn) ═══ -->
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="__SITE_URL__" />
-    <meta property="og:title" content="Fisio no Marketing — IA para Fisioterapeutas" />
-    <meta property="og:description" content="Entre na comunidade. Use 30 dias. Sem pagar nada. A plataforma de IA feita para fisioterapeutas crescerem." />
-    <meta property="og:image" content="__SITE_URL__/og-image.jpg" />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
-    <meta property="og:locale" content="pt_BR" />
-    <meta property="og:site_name" content="Fisio no Marketing" />
+  /* 1. HERO */
+  .hero { position: relative; min-height: 100svh; display: grid; align-items: center; overflow: hidden; padding: 9rem var(--sc-gutter) 5rem; }
+  .hero__ring { position: absolute; right: -10vw; top: 6vh; width: min(70vw, 760px); aspect-ratio: 1; border-radius: 50%; border: 1px solid rgba(0,180,216,.35); box-shadow: inset 0 0 0 46px rgba(0,180,216,.05), 0 0 0 46px rgba(0,180,216,.04); }
+  .hero__mid { position: absolute; right: 8vw; bottom: 12vh; width: min(34vw, 420px); aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle at 40% 35%, rgba(0,180,216,.22), rgba(0,180,216,0) 62%); }
+  .hero__copy { position: relative; z-index: 2; max-width: 46rem; }
+  .eyebrow { font: 600 .76rem/1.4 var(--sc-font-text); letter-spacing: .22em; text-transform: uppercase; color: var(--sc-accent); margin: 0 0 1.3rem; }
+  .hero h1 { font-family: var(--sc-font-display); font-weight: 900; text-transform: uppercase; font-size: clamp(2.9rem, 7.2vw, 5.8rem); line-height: .98; letter-spacing: .005em; color: var(--sc-ink); margin: 0 0 1.4rem; }
+  .hero__lead { font-size: clamp(1.05rem, 1.6vw, 1.22rem); color: var(--sc-ink-soft); max-width: 36rem; line-height: 1.6; margin: 0 0 2.2rem; }
+  .actions { display: flex; flex-wrap: wrap; gap: .8rem; }
+  .trust { margin-top: 2.6rem; font-size: .88rem; color: var(--sc-ink-soft); max-width: 38rem; }
 
-    <!-- ═══ TWITTER CARD ═══ -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Fisio no Marketing — IA para Fisioterapeutas" />
-    <meta name="twitter:description" content="Entre na comunidade. Use 30 dias. Sem pagar nada. A plataforma de IA feita para fisioterapeutas crescerem." />
-    <meta name="twitter:image" content="__SITE_URL__/og-image.jpg" />
+  /* 2. HISTORIA: 9 quadros quase identicos = persistencia da visao */
+  .story .sc-stage { background: #060f1d; overflow: hidden; }
+  .shot { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 40%; }
+  .layer { --s: 0; --e: .04; --k: clamp(0, (var(--sc-p, 0) - var(--s)) / (var(--e) - var(--s)), 1); position: absolute; inset: 0; opacity: var(--k); }
+  .story .sc-copy { max-width: 36rem; text-shadow: 0 1px 14px rgba(6,15,29,.85); }
+  .story .sc-copy h2 { margin: 0 0 .9rem; font-family: var(--sc-font-display); font-weight: 900; text-transform: uppercase; font-size: clamp(2.2rem, 4.6vw, 3.8rem); line-height: .98; letter-spacing: .01em; color: var(--sc-ink); }
+  .story .sc-copy p { color: #D3DEEC; margin: 0; font-size: 1.04rem; line-height: 1.55; }
+  .story .sc-scrim--lead { background: linear-gradient(to top, rgba(6,15,29,.94) 0%, rgba(6,15,29,.82) 28%, rgba(6,15,29,.44) 46%, rgba(6,15,29,0) 64%); }
+  .frame-no { position: absolute; right: var(--sc-gutter); bottom: 1.4rem; font: 500 .72rem/1 var(--sc-font-mono); letter-spacing: .16em; color: var(--sc-ink-soft); }
+  .quote { max-width: 46rem; margin: 0 0 2.6rem; padding-left: 1.2rem; border-left: 3px solid var(--sc-accent); color: var(--sc-ink); font: 600 clamp(1.1rem, 2vw, 1.4rem)/1.5 var(--sc-font-text); }
+  .quote--warn { border-left-color: var(--sc-warn); }
+  .kicker { font: 500 .76rem/1.4 var(--sc-font-mono); letter-spacing: .18em; text-transform: uppercase; color: var(--sc-accent); margin: 0 0 1rem; }
+  .content-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+  .stat { padding: 1.5rem 1.3rem; border-radius: 10px; background: #07101f; border: 1px solid rgba(241,246,251,.08); display: grid; gap: .5rem; align-content: start; }
+  .stat b { font: 900 clamp(2.6rem, 4vw, 3.4rem)/1 var(--sc-font-display); color: var(--sc-accent); }
+  .stat b.warn { color: var(--sc-warn); }
+  .stat span { color: var(--sc-ink); font-size: .95rem; line-height: 1.35; font-weight: 600; }
+  .stat p { margin: 0; color: var(--sc-ink-soft); font-size: .84rem; line-height: 1.45; }
+  .fine { margin-top: 1.4rem; font-size: .86rem; color: var(--sc-ink-soft); max-width: 50rem; line-height: 1.55; }
+  .fine a { color: var(--sc-ink-soft); }
+  .big10 { display: grid; grid-template-columns: auto 1fr; gap: 2rem; align-items: center; margin: 0 0 3rem; }
+  .big10 b { font: 900 clamp(5rem, 14vw, 10rem)/.85 var(--sc-font-display); color: var(--sc-accent); }
+  .big10 p { margin: 0; max-width: 34rem; color: var(--sc-ink-soft); font-size: 1.08rem; line-height: 1.6; }
+  .big10 p strong { color: var(--sc-ink); }
+  .steps--4 .n { font-family: var(--sc-font-mono); }
+  .minimum { margin-top: 3rem; }
+  .about { background: var(--sc-surface); }
+  .about__grid { display: grid; grid-template-columns: minmax(220px, 360px) 1fr; gap: clamp(1.5rem, 5vw, 4rem); align-items: center; }
+  .about__photo { width: 100%; height: auto; border-radius: 14px; display: block; aspect-ratio: 4 / 5; object-fit: cover; box-shadow: 0 0 0 1px rgba(0,180,216,.35), 0 24px 60px rgba(0,0,0,.4); }
+  .about h2 { font-family: var(--sc-font-display); font-weight: 900; text-transform: uppercase; font-size: clamp(2.4rem, 5vw, 4rem); line-height: 1; margin: 0 0 .4rem; color: var(--sc-ink); }
+  .about .role { color: var(--sc-accent); font: 500 .8rem/1.4 var(--sc-font-mono); letter-spacing: .16em; text-transform: uppercase; margin: 0 0 1.4rem; }
+  .about p { color: var(--sc-ink-soft); line-height: 1.65; margin: 0 0 1rem; max-width: 40rem; }
+  .creds { list-style: none; padding: 0; margin: 1.2rem 0 0; display: grid; gap: .5rem; }
+  .creds li { color: var(--sc-ink); font-size: .95rem; padding-left: 1.4rem; position: relative; }
+  .creds li::before { content: ""; position: absolute; left: 0; top: .55em; width: 8px; height: 8px; border-radius: 2px; background: var(--sc-accent); }
+  .motto { margin-top: 1.6rem; font: 600 1.05rem/1.4 var(--sc-font-text); color: var(--sc-ink); }
+  .price--featured .price__tag { color: var(--sc-green); }
+  .card.price .price__value { font-family: var(--sc-font-display); font-weight: 900; font-size: clamp(3.4rem, 6vw, 4.6rem); line-height: 1; color: var(--sc-ink); margin: 0; }
+  .card.price .pay { margin: .7rem 0 0; color: var(--sc-ink-soft); font-size: .9rem; line-height: 1.45; }
+  .card.price .price__value small { font: 600 1rem/1 var(--sc-font-text); color: var(--sc-ink-soft); }
+  .card.price .price__tag { font: 500 .76rem/1 var(--sc-font-mono); letter-spacing: .18em; text-transform: uppercase; color: var(--sc-accent); margin: 0 0 .8rem; }
+  .card.price--featured .price__tag { color: var(--sc-green); }
+  .price .btn { margin-top: 1.4rem; justify-content: center; }
+  .price .excl { margin: 0 0 1.2rem; padding: .9rem 1rem; border-radius: 8px; background: rgba(255,107,53,.08); border: 1px solid rgba(255,107,53,.35); color: var(--sc-ink); font-size: .88rem; line-height: 1.5; }
+  .price .excl b { color: #FF9568; }
+  .pricing-grid { align-items: stretch; }
 
-    <!-- ═══ FAVICON ═══ -->
-    <link rel="icon" type="image/png" href="/favicon.png" />
-    <link rel="apple-touch-icon" href="/favicon.png" />
+  /* 3. PROBLEM: flow */
+  .problem h2, .services h2, .process h2, .pricing h2, .faq h2, .close h2 {
+    font-family: var(--sc-font-display); font-weight: 900; text-transform: uppercase; letter-spacing: .01em; line-height: 1; color: var(--sc-ink); margin: 0 0 1rem;
+    font-size: clamp(2.4rem, 5vw, 4rem);
+  }
+  .lead { color: var(--sc-ink-soft); font-size: 1.08rem; line-height: 1.6; max-width: 40rem; margin: 0 0 2.6rem; }
+  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+  .card { background: var(--sc-surface); border: 1px solid rgba(241,246,251,.08); border-radius: 10px; padding: 1.6rem 1.5rem; }
+  .card h3 { font-family: var(--sc-font-display); text-transform: uppercase; letter-spacing: .01em; font-weight: 800; font-size: 1.22rem; margin: 0 0 .6rem; color: var(--sc-ink); }
+  .card p { margin: 0; color: var(--sc-ink-soft); font-size: .95rem; line-height: 1.55; }
+  .card .n { display: block; font: 600 .75rem/1 var(--sc-font-text); color: var(--sc-accent); letter-spacing: .14em; margin-bottom: 1.2rem; }
 
-    <!-- ═══ FONTS ═══ -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800;900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+  .steps--4 { grid-template-columns: repeat(4, 1fr); }
+  @media (max-width: 1000px) { .steps--4 { grid-template-columns: repeat(2, 1fr); } }
 
-    <!-- ═══ ANALYTICS ═══ -->
-    <!-- Google Analytics: substitua G-XXXXXXXXXX pelo seu Measurement ID -->
-    <!--
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-XXXXXXXXXX');
-    </script>
-    -->
+  /* 4. SERVICES: pan rail */
+  .services .sc-stage { display: flex; align-items: center; overflow: hidden; }
+  .rail { display: flex; gap: 1.2rem; align-items: stretch; padding-left: var(--sc-gutter); width: max-content; }
+  .rail__lead { width: min(30vw, 380px); padding-right: 2rem; align-self: center; }
+  .rail__lead p { color: var(--sc-ink-soft); margin: 0; line-height: 1.6; }
+  .svc { width: min(78vw, 420px); min-height: 300px; display: flex; flex-direction: column; justify-content: space-between; }
+  .svc h3 { font-size: 1.5rem; }
+  .svc ul { list-style: none; padding: 0; margin: 1rem 0 0; display: grid; gap: .45rem; }
+  .svc li { color: var(--sc-ink-soft); font-size: .95rem; padding-left: 1.2rem; position: relative; }
+  .svc li::before { content: ""; position: absolute; left: 0; top: .62em; width: 6px; height: 6px; border-radius: 50%; background: var(--sc-accent); }
 
-    <!-- Meta Pixel: substitua XXXXXXXXXXXXXXXX pelo seu Pixel ID -->
-    <!--
-    <script>
-      !function(f,b,e,v,n,t,s)
-      {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-      n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-      n.queue=[];t=b.createElement(e);t.async=!0;
-      t.src=v;s=b.getElementsByTagName(e)[0];
-      s.parentNode.insertBefore(t,s)}(window, document,'script',
-      'https://connect.facebook.net/en_US/fbevents.js');
-      fbq('init', 'XXXXXXXXXXXXXXXX');
-      fbq('track', 'PageView');
-    </script>
-    <noscript><img height="1" width="1" style="display:none"
-      src="https://www.facebook.com/tr?id=XXXXXXXXXXXXXXXX&ev=PageView&noscript=1"
-    /></noscript>
-    -->
-  </head>
-  <body>
-    <div id="root"></div>
-    <script src="/env.js"></script>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+  /* 5. PROCESS */
+  .process { background: var(--sc-surface); }
+  .approval { margin-top: 1.4rem; display: inline-flex; align-items: center; gap: .6rem; padding: .7rem 1rem; border-radius: 999px; background: rgba(0,180,216,.12); color: #7FDCF0; font-size: .88rem; }
+  .approval::before { content: "✓"; display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: var(--sc-accent); color: var(--sc-accent-ink); font-weight: 700; font-size: .8rem; }
+
+  /* 6. PRICING */
+  .pricing-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; align-items: stretch; }
+  .price { display: flex; flex-direction: column; }
+  .price__tag { font: 600 .72rem/1 var(--sc-font-text); letter-spacing: .18em; text-transform: uppercase; color: var(--sc-accent); margin: 0 0 .8rem; }
+  .price__value { font-family: var(--sc-font-display); font-weight: 900; font-size: clamp(3.4rem, 6vw, 4.6rem); color: var(--sc-ink); line-height: 1; margin: 0; }
+  .price__value small { font-size: 1rem; font-weight: 600; color: var(--sc-ink-soft); }
+  .price ul { list-style: none; padding: 0; margin: 1.4rem 0 1.4rem; display: grid; gap: .55rem; }
+  .price li { color: var(--sc-ink-soft); font-size: .95rem; padding-left: 1.4rem; position: relative; }
+  .price li::before { content: "✓"; position: absolute; left: 0; color: var(--sc-accent); font-weight: 700; }
+  .price .note { margin-top: auto; font-size: .86rem; color: var(--sc-ink-soft); border-top: 1px solid rgba(241,246,251,.1); padding-top: 1rem; }
+  .price--featured { border-color: rgba(0,180,216,.6); background: #143056; }
+  .pricing .fine { margin-top: 1.4rem; font-size: .86rem; color: var(--sc-ink-soft); max-width: 46rem; }
+
+  /* 7. FAQ */
+  .faq dl { display: grid; gap: 1rem; margin: 2rem 0 0; max-width: 52rem; }
+  .faq dt { font-family: var(--sc-font-text); font-weight: 600; font-size: 1.08rem; color: var(--sc-ink); margin: 0 0 .4rem; }
+  .faq dd { margin: 0; color: var(--sc-ink-soft); line-height: 1.6; padding-bottom: 1rem; border-bottom: 1px solid rgba(241,246,251,.1); }
+  .faq dd + dt { margin-top: 1rem; }
+
+  /* 8. CLOSE */
+  .close .sc-stage { display: grid; place-items: center; text-align: center; }
+  .close__inner { max-width: 42rem; padding: 0 var(--sc-gutter); }
+  .close h2 { margin-inline: auto; }
+  .close p { color: var(--sc-ink-soft); margin: 0 auto 2rem; max-width: 34rem; line-height: 1.6; }
+  .foot { position: absolute; left: 0; right: 0; bottom: 1.4rem; text-align: center; font-size: .78rem; color: var(--sc-ink-soft); padding: 0 var(--sc-gutter); }
+  .foot a { color: var(--sc-ink-soft); display: inline-block; padding: .75rem .35rem; }
+
+  .section-tight { padding-block: clamp(4rem, 9vh, 7rem); }
+  .wrap { width: 100%; max-width: var(--sc-maxw, 1180px); margin-inline: auto; padding-inline: var(--sc-gutter); }
+
+  @media (max-width: 1000px) { .content-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 760px) {
+    .steps, .steps--4, .steps--3, .pricing-grid, .content-grid, .about__grid { grid-template-columns: 1fr; }
+    .big10 { grid-template-columns: 1fr; gap: 1rem; }
+    .hero__ring { width: 120vw; right: -60vw; }
+    .hero__mid { display: none; }
+    .hero { padding: 7rem var(--sc-gutter) 3rem; }
+    .hero h1 { font-size: clamp(2.5rem, 12vw, 3.6rem); }
+    .about__photo { max-width: 280px; }
+    .story .sc-copy p { font-size: .98rem; }
+  }
+  @media (max-width: 480px) {
+    .sm-hide { display: none; }
+    .brand { font-size: .78rem; letter-spacing: .08em; }
+    .bar-cta { padding: .85rem 1rem; }
+  }
+  @media (max-height: 520px) {
+    .hero { padding: 5.5rem var(--sc-gutter) 2.5rem; }
+    .hero h1 { font-size: clamp(2rem, min(7vw, 11vh), 3.4rem); margin-bottom: .8rem; }
+    .hero__lead { margin-bottom: 1rem; }
+    .hero .trust { display: none; }
+    .story .sc-scrim--lead { display: none; }
+    .story .sc-copy { max-width: min(34rem, 46vw); padding: .7rem .9rem; border-radius: 12px; background: rgba(6,15,29,.7); }
+    .story .sc-copy h2 { font-size: clamp(1.5rem, 7vh, 2.2rem); margin-bottom: .4rem; }
+    .story .sc-copy p { font-size: .86rem; }
+    .frame-no { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) { .layer { opacity: 0; } .layer:last-of-type { opacity: 1; } }
+</style>
+</head>
+<body>
+
+<span data-sc-progress></span>
+<div class="sc-grain" aria-hidden="true"></div>
+
+<header class="site-bar">
+  <a class="brand" href="#top"><img src="/favicon.png" width="28" height="28" alt="" style="border-radius:6px;margin-right:.6rem">Fisio no <span>&nbsp;Marketing</span></a>
+  <a class="btn bar-cta" href="https://chat.whatsapp.com/DnKK9Wzz9uB8QC72QYuBum" target="_blank" rel="noopener" aria-label="Entrar grátis na comunidade do WhatsApp">Entrar grátis</a>
+</header>
+
+<main id="top">
+
+  <section class="hero" data-sc-act="flow" data-sc-drift="#0A1628">
+    <div class="hero__ring" aria-hidden="true" data-sc-parallax="-0.12"></div>
+    <div class="hero__mid" aria-hidden="true" data-sc-parallax="0.18"></div>
+    <div class="hero__copy">
+      <p class="eyebrow">Marketing para fisioterapeutas e profissionais da saúde</p>
+      <h1>Você aprendeu a salvar vidas. Agora aprenda a fazer sua clínica vender.</h1>
+      <p class="hero__lead">Comunidade gratuita e Pacote Anual para quem saiu da faculdade capaz de cuidar de pessoas, mas nunca aprendeu a gerir a própria empresa: site, IA, processos e decisões baseadas em números.</p>
+      <div class="actions">
+        <a class="btn" href="https://chat.whatsapp.com/DnKK9Wzz9uB8QC72QYuBum" target="_blank" rel="noopener">Entrar na comunidade grátis</a>
+        <a class="btn btn--ghost" href="#caminhos">Ver o Pacote Anual</a>
+      </div>
+      <p class="trust">Por Vinicius Aguirre, fisioterapeuta de formação que atua com marketing, vendas e inteligência artificial. Não prometemos resultado financeiro: prometemos método, estrutura e companhia no caminho.</p>
+    </div>
+  </section>
+
+  <!-- 2 · HISTORIA: pin. 9 quadros com o mesmo enquadramento (persistencia da visao). -->
+  <section class="story" data-sc-act="pin" data-sc-span="5" data-sc-drift="#060f1d" aria-label="Animação em nove quadros: uma turma de fisioterapia atira os capelos na formatura, a formanda chega a uma clínica vazia, troca a beca pelo jaleco, se preocupa com a agenda e com a crise, decide profissionalizar a clínica e termina ao lado de um grupo de empreendedores da saúde">
+    <div data-sc-stage>
+      <img class="shot" src="/media/fisio-1.webp" width="1600" height="914" alt="Turma de formandos de fisioterapia atirando os capelos para o alto numa cerimônia de formatura, com uma formanda sorrindo no centro" loading="lazy" fetchpriority="low" decoding="async">
+      <div class="layer" style="--s:0.08;--e:0.12"><img class="shot" src="/media/fisio-2.webp" width="1600" height="914" alt="A formanda de beca azul-marinho caminha sorrindo com o diploma na mão enquanto os capelos caem ao fundo" loading="lazy" fetchpriority="low" decoding="async"></div>
+      <div class="layer" style="--s:0.18;--e:0.22"><img class="shot" src="/media/fisio-3.webp" width="1600" height="914" alt="A formanda, ainda de beca, para diante da porta de vidro de uma pequena clínica de fisioterapia" loading="lazy" fetchpriority="low" decoding="async"></div>
+      <div class="layer" style="--s:0.28;--e:0.32"><img class="shot" src="/media/fisio-4.webp" width="1600" height="914" alt="A profissional de beca em pé no meio de uma clínica de fisioterapia vazia, sem saber por onde começar" loading="lazy" fetchpriority="low" decoding="async"></div>
+      <div class="layer" style="--s:0.4;--e:0.44"><img class="shot" src="/media/fisio-5.webp" width="1600" height="914" alt="A fisioterapeuta agora de jaleco branco, sentada na recepção da clínica vazia, olhando para a porta" loading="lazy" fetchpriority="low" decoding="async"></div>
+      <div class="layer" style="--s:0.52;--e:0.56"><img class="shot" src="/media/fisio-6.webp" width="1600" height="914" alt="A fisioterapeuta preocupada à mesa, com a mão na testa, o celular em silêncio e a agenda em branco" loading="lazy" fetchpriority="low" decoding="async"></div>
+      <div class="layer" style="--s:0.64;--e:0.68"><img class="shot" src="/media/fisio-7.webp" width="1600" height="914" alt="A fisioterapeuta olhando um gráfico em queda no notebook, com o céu de tempestade na janela" loading="lazy" fetchpriority="low" decoding="async"></div>
+      <div class="layer" style="--s:0.76;--e:0.80"><img class="shot" src="/media/fisio-8.webp" width="1600" height="914" alt="A fisioterapeuta diante de um quadro com fluxograma de processos, decidida e calma, com o notebook aberto" loading="lazy" fetchpriority="low" decoding="async"></div>
+      <div class="layer" style="--s:0.88;--e:0.92"><img class="shot" src="/media/fisio-9.webp" width="1600" height="914" alt="A fisioterapeuta no centro de um grupo de profissionais da saúde empreendedores sorrindo juntos na clínica" loading="lazy" fetchpriority="low" decoding="async"></div>
+      <div class="sc-scrim sc-scrim--lead" aria-hidden="true"></div>
+
+      <div class="sc-copy sc-copy--lead" data-sc-cue="0 0.2 0 0.25">
+        <h2>Você saiu da faculdade capaz de salvar vidas.</h2>
+        <p>Anos de estudo, técnica e cuidado com o corpo humano. Você sabe devolver movimento e aliviar dor.</p>
+      </div>
+      <div class="sc-copy sc-copy--lead" data-sc-cue="0.18 0.38 0.25 0.25">
+        <h2>Só que ninguém te ensinou a tocar a empresa.</h2>
+        <p>Abrir a porta é a parte fácil. Difícil é encher a agenda, vender, cobrar e se manter de pé.</p>
+      </div>
+      <div class="sc-copy sc-copy--lead" data-sc-cue="0.36 0.62 0.2 0.2">
+        <h2>A beca ficou para trás. O jaleco chegou. Os pacientes, não.</h2>
+        <p>Muito profissional bom atende bem, mas vive com a agenda instável, esperando a próxima indicação.</p>
+      </div>
+      <div class="sc-copy sc-copy--lead" data-sc-cue="0.6 0.76 0.25 0.25">
+        <h2>E se o cenário apertar?</h2>
+        <p>Juros altos, inflação acima da meta e um El Niño forte no radar. Você tem um plano?</p>
+      </div>
+      <div class="sc-copy sc-copy--lead" data-sc-cue="0.74 0.9 0.25 0.25">
+        <h2>Profissionalizar é o caminho.</h2>
+        <p>Processos, números e uma estrutura mínima que sustenta a clínica nos meses bons e nos difíceis.</p>
+      </div>
+      <div class="sc-copy sc-copy--lead" data-sc-cue="0.88 1 0.25 0.01">
+        <h2>E você não precisa fazer isso sozinho.</h2>
+        <p>Um grupo de profissionais da saúde com as mesmas dores, caminhando juntos.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 · IA NAO E SO PROMPT -->
+  <section class="sc-section section-tight problem" data-sc-act="flow" data-sc-drift="#0C1B33">
+    <div class="wrap">
+      <p class="kicker">A era da IA</p>
+      <div class="big10">
+        <b aria-hidden="true">10%</b>
+        <p>Na nossa experiência, <strong>saber pedir ao ChatGPT é só uma pequena parte</strong> do que empreendedores de sucesso fazem. O resto é estrutura: o que acontece antes e depois do prompt.</p>
+      </div>
+      <h2 data-sc-kinetic="lines">Antes da IA, o básico bem feito.</h2>
+      <p class="lead">Quem usa IA sobre uma base desorganizada só automatiza a desorganização. A ordem que defendemos é simples:</p>
+      <div class="steps steps--4">
+        <article class="card" data-sc-in><span class="n">01</span><h3>Infraestrutura básica</h3><p>Site próprio, presença no Google e canais de contato funcionando. A casa arrumada antes de receber visita.</p></article>
+        <article class="card" data-sc-in><span class="n">02</span><h3>O ecossistema mínimo</h3><p>Poucas ferramentas conectadas entre si, em vez de dez soltas: agenda, contato, financeiro e divulgação.</p></article>
+        <article class="card" data-sc-in><span class="n">03</span><h3>Dados, processo e visão de dono</h3><p>Cultura de dados, mentalidade de empreendedor e conhecimento dos processos da clínica, do primeiro contato ao pós-atendimento.</p></article>
+        <article class="card" data-sc-in><span class="n">04</span><h3>Decisão por números</h3><p>Com dados confiáveis, dá para decidir com base em números e até simular cenários, em vez de decidir no susto.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 · CENARIO -->
+  <section class="sc-section section-tight problem" data-sc-act="flow" data-sc-drift="#0F2240">
+    <div class="wrap">
+      <p class="kicker">Cenário dos próximos meses</p>
+      <h2 data-sc-kinetic="lines">Você já tem um plano anti-crise?</h2>
+      <p class="quote quote--warn" data-sc-in>Ou vai esperar no “deixa a vida me levar”?</p>
+      <p class="lead">Não é alarmismo e não é previsão de catástrofe: é leitura de cenário. Os números mais recentes apontam para <strong>desaceleração, juros altos e pressão sobre o custo de vida</strong>, além de um fenômeno climático forte no horizonte. Quem tem processo e caixa organizados atravessa melhor qualquer cenário.</p>
+      <div class="content-grid">
+        <div class="stat" data-sc-in><b>13,75%</b><span>Selic projetada para o fim de 2026</span><p>Projeção do mercado; 12,5% para 2027.</p></div>
+        <div class="stat" data-sc-in><b class="warn">5,22%</b><span>Inflação (IPCA) projetada para 2026</span><p>Acima do teto da meta, de 4,5%.</p></div>
+        <div class="stat" data-sc-in><b>1,75%</b><span>Crescimento do PIB projetado para 2026</span><p>A projeção para 2027 cai para 1,15%.</p></div>
+        <div class="stat" data-sc-in><b class="warn">+90%</b><span>Chance de El Niño muito forte</span><p>Declarado em 6/11/2026 pela NOAA. Impactos sobre clima e economia são projeções.</p></div>
+      </div>
+      <p class="fine">Fontes: Boletim Focus, Banco Central do Brasil, de 9/11/2026 (medianas das projeções do mercado); NOAA/Climate Prediction Center e INMET, novembro de 2026. São projeções, não resultados garantidos, e podem mudar.</p>
+    </div>
+  </section>
+
+  <!-- 5 · VENDER E O CORACAO -->
+  <section class="sc-section section-tight problem" data-sc-act="flow" data-sc-drift="#0C1B33">
+    <div class="wrap">
+      <p class="kicker">O coração da empresa</p>
+      <h2 data-sc-kinetic="lines">Empresa que não vende, quebra.</h2>
+      <p class="lead">Marketing e vendas são o coração de qualquer negócio, inclusive de uma clínica de saúde. Cuidar bem do paciente é o que você já sabe fazer. Fazer o paciente chegar até você é o que ninguém ensinou. O mínimo para começar:</p>
+      <div class="steps steps--3">
+        <article class="card" data-sc-in><span class="n">MÍNIMO 1</span><h3>Um site</h3><p>Sua identidade digital: o endereço próprio em que o paciente encontra quem você é, o que faz e como falar com você.</p></article>
+        <article class="card" data-sc-in><span class="n">MÍNIMO 2</span><h3>IA usada com profissionalismo</h3><p>Não como brinquedo, mas ligada a processos reais: artes, textos, scripts de atendimento e respostas.</p></article>
+        <article class="card" data-sc-in><span class="n">MÍNIMO 3</span><h3>Um grupo que enfrenta o mesmo</h3><p>Trocar experiência com quem vive as mesmas dificuldades encurta o caminho e tira o peso de fazer tudo sozinho.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6 · DOIS CAMINHOS -->
+  <section class="sc-section section-tight pricing" id="caminhos" data-sc-act="flow" data-sc-drift="#0A1628">
+    <div class="wrap">
+      <p class="kicker">Dois jeitos de começar</p>
+      <h2 data-sc-kinetic="lines">Comece grátis. Avance quando fizer sentido.</h2>
+      <p class="lead">A comunidade é a porta de entrada, sem custo. O Pacote Anual é para quem quer construir a estrutura com acompanhamento.</p>
+      <div class="pricing-grid">
+        <article class="card price" data-sc-in>
+          <p class="price__tag">Comunidade</p>
+          <p class="price__value">Grátis</p>
+          <ul>
+            <li>Comunidade no WhatsApp</li>
+            <li>Prompts gratuitos</li>
+            <li>Algumas aulas abertas</li>
+            <li>Networking com outros profissionais da saúde</li>
+          </ul>
+          <p class="note">Ideal para dar o primeiro passo e conhecer o método.</p>
+          <a class="btn" href="https://chat.whatsapp.com/DnKK9Wzz9uB8QC72QYuBum" target="_blank" rel="noopener">Entrar na comunidade grátis</a>
+        </article>
+        <article class="card price price--featured" data-sc-in>
+          <p class="price__tag">Pacote Anual</p>
+          <p class="price__value">R$ 997 <small>à vista</small></p>
+          <p class="pay">Ou em até 10x no cartão, com o acréscimo da taxa do cartão. Pagamento combinado direto comigo no WhatsApp.</p>
+          <ul>
+            <li>Encontros semanais por Google Meet</li>
+            <li>Skills de uso diário: artes, copys, scripts, landing pages e mais</li>
+            <li>Código de indicação exclusivo: 15% do valor do pacote por novo participante</li>
+            <li>Site e blog otimizados e conectados ao Google, construídos pela equipe</li>
+            <li>IA autônoma própria, que aprende com o seu negócio e pode atender clientes no WhatsApp</li>
+            <li>Participação na construção de um sistema de gestão de clínicas feito pela comunidade: financeiro, marketing, vendas e agenda</li>
+          </ul>
+          <p class="excl"><b>Não está incluso:</b> servidor VPS (cerca de R$ 40 por mês, a equipe conduz a configuração), domínio (geralmente até R$ 50) e o custo de uso do modelo de IA, que é pessoal e varia conforme o uso.</p>
+          <a class="btn" href="https://wa.me/5554996945667?text=Quero%20o%20Pacote%20Anual%20do%20Fisio%20no%20Marketing" target="_blank" rel="noopener">Quero o Pacote Anual</a>
+        </article>
+      </div>
+      <p class="fine">Divulgação e atendimento a pacientes por IA seguem a LGPD e as regras de publicidade do seu conselho profissional (CREFITO, CFM e outros). A construção da sua estrutura respeita essas regras. Resultados dependem da sua execução e do mercado.</p>
+    </div>
+  </section>
+
+  <!-- 7 · QUEM CONDUZ -->
+  <section class="sc-section section-tight about" data-sc-act="flow" data-sc-drift="#0F2240">
+    <div class="wrap about__grid">
+      <img class="about__photo" src="/media/vinicius-aguirre.webp" width="540" height="675" alt="Retrato de Vinicius Aguirre, fundador do Fisio no Marketing" loading="lazy" decoding="async">
+      <div>
+        <p class="role">Fundador e estrategista</p>
+        <h2>Vinicius Aguirre</h2>
+        <p>Fisioterapeuta de formação, migrou para marketing, vendas e inteligência artificial depois de viver na prática a dor de sair da faculdade sabendo cuidar de pessoas, mas sem saber gerir uma empresa.</p>
+        <ul class="creds">
+          <li>Graduação em Fisioterapia</li>
+          <li>MBA em Marketing Digital</li>
+          <li>Pós-graduação em Economia</li>
+          <li>Pós-graduação em Ciência de Dados e Big Data Analytics</li>
+        </ul>
+        <p class="motto">Fala como fisio. Pensa como dado. Executa como estrategista.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8 · FAQ -->
+  <section class="sc-section section-tight faq" data-sc-act="flow" data-sc-drift="#0C1B33">
+    <div class="wrap">
+      <h2>Perguntas frequentes sobre o Fisio no Marketing</h2>
+      <dl>
+        <dt>O que é o Fisio no Marketing?</dt>
+        <dd>É um projeto de Vinicius Aguirre, fisioterapeuta de formação que atua com marketing, vendas e inteligência artificial, para ajudar fisioterapeutas e outros profissionais da saúde a organizar a base da própria clínica: identidade digital, uso profissional de IA, processos e decisões baseadas em números.</dd>
+
+        <dt>A comunidade gratuita é realmente grátis?</dt>
+        <dd>Sim. A comunidade no WhatsApp é gratuita e reúne prompts gratuitos, algumas aulas abertas e networking com outros profissionais da saúde que enfrentam as mesmas dificuldades. Basta entrar pelo link do grupo.</dd>
+
+        <dt>Quanto custa o Pacote Anual e como pagar?</dt>
+        <dd>O Pacote Anual custa R$ 997 à vista. Também é possível parcelar em até 10x no cartão, com o acréscimo da taxa do cartão. Não há link de pagamento: o caminho é falar diretamente com Vinicius Aguirre pelo WhatsApp, que combina a forma de pagamento.</dd>
+
+        <dt>O que está incluso no Pacote Anual de R$ 997?</dt>
+        <dd>Encontros semanais por Google Meet; skills usadas no dia a dia (artes, copys, scripts, landing pages e mais); um código de indicação exclusivo com 15% do valor do pacote por novo participante; construção de site e blog otimizados e conectados ao Google pela equipe; uma IA autônoma própria que aprende com o seu negócio e pode atender clientes no WhatsApp; e participação na construção de um sistema de gestão de clínicas feito pela comunidade, com financeiro, marketing, vendas e agenda.</dd>
+
+        <dt>O que não está incluso no Pacote Anual?</dt>
+        <dd>Três custos ficam por conta do participante: o servidor (VPS), de cerca de R$ 40 por mês, cuja configuração a equipe conduz; o domínio, geralmente até R$ 50; e o custo de uso do modelo de IA, que é pessoal e varia conforme o uso.</dd>
+
+        <dt>Como funciona o código de indicação?</dt>
+        <dd>Cada participante do Pacote Anual recebe um código exclusivo. Para cada nova pessoa que entra com o seu código, você recebe 15% do valor do pacote. As condições são combinadas com Vinicius no WhatsApp.</dd>
+
+        <dt>A IA pode responder pacientes no WhatsApp?</dt>
+        <dd>Pode ser configurada para isso. Antes de colocar uma IA em contato com pacientes, é preciso respeitar a LGPD e as regras de publicidade e ética do seu conselho profissional (como CREFITO ou CFM). Esse cuidado faz parte da construção junto com a equipe.</dd>
+
+        <dt>O projeto serve só para fisioterapeutas?</dt>
+        <dd>Nasceu da realidade da fisioterapia, mas a base vale para profissionais da saúde que atendem em consultório ou clínica e precisam vender, organizar processos e se preparar para cenários difíceis.</dd>
+      </dl>
+    </div>
+  </section>
+
+  <section class="close" id="contato" data-sc-act="pin" data-sc-span="1.15" data-sc-drift="#0A1628">
+    <div data-sc-stage>
+      <div class="close__inner">
+        <h2 data-sc-cue="0.06" data-sc-kinetic="lines">Comece pelo mínimo. Comece acompanhado.</h2>
+        <p data-sc-cue="0.12">Entre na comunidade gratuita para dar o primeiro passo, ou fale com a equipe sobre o Pacote Anual e construa a estrutura da sua clínica.</p>
+        <div class="actions" style="justify-content:center" data-sc-cue="0.06">
+          <a class="btn" href="https://chat.whatsapp.com/DnKK9Wzz9uB8QC72QYuBum" target="_blank" rel="noopener" data-sc-magnet="0.26">Entrar na comunidade grátis</a>
+          <a class="btn btn--ghost" href="https://wa.me/5554996945667?text=Quero%20o%20Pacote%20Anual%20do%20Fisio%20no%20Marketing" target="_blank" rel="noopener">Falar sobre o Pacote Anual</a>
+        </div>
+      </div>
+      <footer class="foot">© 2026 Vinicius Aguirre · Fisio no Marketing · Todos os direitos reservados</footer>
+    </div>
+  </section>
+
+</main>
+
+<script src="/sc/scrollcraft.js"></script>
+<script>ScrollCraft.mount(document.body);</script>
+</body>
 </html>

@@ -45,7 +45,7 @@ npm run build
 2. Escolha **Upload** e suba o `docker-compose.yml`
 3. Em **Environment variables**, adicione:
    - `VITE_WHATSAPP_LINK` = seu link do grupo
-   - `VITE_SITE_URL` = URL final da landing page, ex.: `https://seudominio.com.br`
+   - `VITE_SITE_URL` = URL final da landing page, ex.: `https://fisio.antidotodigital.com.br`
 4. Clique em **Deploy the stack**
 
 ### Opção 2 — Via terminal no VPS
