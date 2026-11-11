@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react'
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), 'VITE_')
-  const siteUrl = (env.VITE_SITE_URL || 'https://seudominio.com.br').replace(/\/$/, '')
+  const siteUrl = (env.VITE_SITE_URL || 'https://fisio.antidotodigital.com.br').replace(/\/$/, '')
 
   return {
     plugins: [
@@ -21,7 +21,7 @@ export default defineConfig(({ mode }) => {
             '',
             '## Ofertas',
             '- Comunidade gratuita no WhatsApp: prompts gratuitos, algumas aulas abertas e networking.',
-            '- Pacote Anual, R$ 997 por ano: encontros semanais por Google Meet; skills de uso diário (artes, copys, scripts, landing pages); código de indicação com 15% do valor do pacote por novo participante; site e blog otimizados e conectados ao Google; IA autônoma própria; participação na construção de um sistema de gestão de clínicas feito pela comunidade.',
+            '- Pacote Anual, R$ 997 à vista (ou em até 10x no cartão, com acréscimo da taxa do cartão; contratação pelo WhatsApp): encontros semanais por Google Meet; skills de uso diário (artes, copys, scripts, landing pages); código de indicação com 15% do valor do pacote por novo participante; site e blog otimizados e conectados ao Google; IA autônoma própria; participação na construção de um sistema de gestão de clínicas feito pela comunidade.',
             '- Não incluso no Pacote Anual: servidor VPS (cerca de R$ 40 por mês), domínio (geralmente até R$ 50) e custo de uso do modelo de IA (varia).',
             '',
             '## Página',
