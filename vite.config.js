@@ -17,7 +17,7 @@ export default defineConfig(({ mode }) => {
           this.emitFile({ type: 'asset', fileName: 'llms.txt', source: [
             '# Fisio no Marketing',
             '',
-            '> Projeto de Vinicius Aguirre (fisioterapeuta de formação, com carreira empresarial e a saúde como maior expertise) para ajudar fisioterapeutas e profissionais da saúde a organizar a base da clínica: site, uso profissional de IA, processos, dados e vendas.',
+            '> Projeto de Vinicius Aguirre (fisioterapeuta de formação, com carreira empresarial e a saúde como maior expertise) para ajudar fisioterapeutas a organizar a base da clínica: site, uso profissional de IA, processos, dados e vendas.',
             '',
             '## Ofertas',
             '- Comunidade gratuita no WhatsApp: prompts gratuitos, algumas aulas abertas e networking.',
